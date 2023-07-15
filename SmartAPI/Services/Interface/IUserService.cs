@@ -1,7 +1,9 @@
-﻿namespace SmartAPI.Services.Interface
+﻿using SmartAPI.Models.Request;
+
+namespace SmartAPI.Services.Interface
 {
     public interface IUserService
     {
-        public void Register();
+        public void Register(UserRegisterRequest userRegisterRequest);
     }
 }

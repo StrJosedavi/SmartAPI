@@ -1,4 +1,5 @@
 ﻿using SmartAPI.Data;
+using SmartAPI.Models.Request;
 using SmartAPI.Services.Interface;
 
 namespace SmartAPI.Services
@@ -11,7 +12,7 @@ namespace SmartAPI.Services
             _dbContext = dbContext;
         }
 
-        public void Register()
+        public void Register(UserRegisterRequest userRegisterRequest)
         {
             throw new NotImplementedException();
         }
