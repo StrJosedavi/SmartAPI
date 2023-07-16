@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\BRASIL\\.nuget\\packages\\": {}
+    "C:\\Users\\user\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\BRASIL\\Desktop\\SmartAPI\\SmartAPI.Tests\\SmartAPI.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Source\\Repos\\SmartAPI\\SmartAPI.Tests\\SmartAPI.Tests.csproj",
       "projectName": "SmartAPI.Tests",
-      "projectPath": "C:\\Users\\BRASIL\\Desktop\\SmartAPI\\SmartAPI.Tests\\SmartAPI.Tests.csproj",
-      "packagesPath": "C:\\Users\\BRASIL\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\BRASIL\\Desktop\\SmartAPI\\SmartAPI.Tests\\obj\\",
+      "projectPath": "C:\\Users\\user\\Source\\Repos\\SmartAPI\\SmartAPI.Tests\\SmartAPI.Tests.csproj",
+      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user\\Source\\Repos\\SmartAPI\\SmartAPI.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\BRASIL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -51,7 +51,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -60,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   }

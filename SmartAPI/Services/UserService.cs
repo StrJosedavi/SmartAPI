@@ -14,7 +14,8 @@ namespace SmartAPI.Services
 
         public void Register(UserRegisterRequest userRegisterRequest)
         {
-            throw new NotImplementedException();
+            //Excluir após a criação da lógica do serviço
+            var teste = userRegisterRequest;
         }
     }
 }
