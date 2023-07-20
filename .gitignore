@@ -1,1 +1,14 @@
+# Arquivos de configuração específicos do Visual Studio
 .vs/
+
+# Pasta obj (contém arquivos intermediários de compilação)
+obj/
+bin/
+*.exe
+*.dll
+
+# Arquivos de pacotes NuGet
+packages/
+
+# Arquivos de build
+build/
