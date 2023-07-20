@@ -6,6 +6,8 @@ obj/
 bin/
 *.exe
 *.dll
+*.pdb
+*.userprefs
 
 # Arquivos de pacotes NuGet
 packages/
