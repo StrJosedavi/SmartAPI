@@ -1,7 +1,7 @@
 # Arquivos de configuração específicos do Visual Studio
 .vs/
 
-# Pasta obj (contém arquivos intermediários de compilação)
+# Arquivos intermediários de compilação
 obj/
 bin/
 *.exe
