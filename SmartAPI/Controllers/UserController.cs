@@ -25,7 +25,8 @@ namespace SmartAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        [ProducesResponseType(200, Type = typeof(Response))] 
+        [ProducesResponseType(200, Type = typeof(Response))]    
+        [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public IActionResult Register(UserRegisterRequest userRegisterRequest)
         {

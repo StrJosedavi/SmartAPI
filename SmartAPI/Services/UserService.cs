@@ -1,21 +1,21 @@
 ﻿using SmartAPI.Data;
 using SmartAPI.Models.Request;
+using SmartAPI.Repository;
 using SmartAPI.Services.Interface;
 
 namespace SmartAPI.Services
 {
     public class UserService : IUserService
     {
-        private readonly ApplicationDbContext _dbContext;
-        public UserService(ApplicationDbContext dbContext)
+        private readonly UserRepository _userRepository;
+        public UserService(UserRepository userRepository)
         {
-            _dbContext = dbContext;
+            _userRepository = userRepository;
         }
 
         public void Register(UserRegisterRequest userRegisterRequest)
         {
-            //Excluir após a criação da lógica do serviço
-            var teste = userRegisterRequest;
+            _userRepository.Save();
         }
     }
 }
