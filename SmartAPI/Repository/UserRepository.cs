@@ -1,25 +1,33 @@
-﻿using API.Domain.Entity.Enums;
-using SmartAPI.Data;
+﻿using SmartAPI.Data;
 using SmartAPI.Data.Entity;
+using SmartAPI.Repository.Interface;
 
-namespace SmartAPI.Repository {
-    public class UserRepository {
+namespace SmartAPI.Repository
+{
+    public class UserRepository : IUserRepository {
 
         private readonly ApplicationDbContext _dbContext;
         public UserRepository(ApplicationDbContext dbContext) {
+
             _dbContext = dbContext;
+
         }
 
-        public void Save(){
-            //Mocado por enquanto
-            User user = new User() {
-                Status = UserStatus.Active
-            };
-            //Fim
+        public void Save(User user){
+            try
+            {
+                _dbContext.User.Add(user);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex) {
+                throw ex;
+            }    
+        }
 
-
-            _dbContext.Set<User>().Add(user);
-            _dbContext.SaveChanges();
+        public User? GetUserById(long Id) {
+   
+            return _dbContext.User.Find(Id); 
+          
         }
     }
 }

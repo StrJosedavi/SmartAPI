@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SmartAPI.Data;
+using SmartAPI.Repository;
+using SmartAPI.Repository.Interface;
 using SmartAPI.Services;
 using SmartAPI.Services.Interface;
 using System.Reflection;
@@ -17,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddSwaggerGen(c =>
