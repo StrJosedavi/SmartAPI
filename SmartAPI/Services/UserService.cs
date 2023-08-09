@@ -26,14 +26,14 @@ namespace SmartAPI.Services
         {
             if (userId <= 0)
             {
-                throw new UserInvalidException();
+                throw new Exception("UserId Inválido");
             }
 
             User? user = _userRepository.GetUserById(userId);
 
             if (user == null)
             {
-                throw new UserNotFoundException();
+                throw new Exception("Usuário não encontrado");
             }
 
             return user;

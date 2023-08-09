@@ -63,17 +63,9 @@ namespace SmartAPI.Controllers
 
                 return Ok(new Response() { Success = true, Data = user, Message = "Usuário encontrado com sucesso." });
             }
-            catch(UserNotFoundException ex)
+            catch(UserException ex)
             {
-                return NotFound(new Response{ Success = false, Data = null, Message = ex.Message});
-            }
-            catch (UserInvalidException ex)
-            {
-                return StatusCode(400, new Response { Success = false, Data = null, Message = ex.Message });
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, new Response { Success = false, Message = "Ocorreu um erro ao processar a solicitação." });
+                return UserException.HandleCustomException(ex);
             }
         }
 
