@@ -8,7 +8,7 @@ namespace SmartAPI.Services.Exceptions.UserExceptions
     {
         public HttpStatusCode StatusCode { get; }
 
-        public UserException(string message, HttpStatusCode statusCode) : base(message) {
+        public UserException(HttpStatusCode statusCode) {
             StatusCode = statusCode;
         }
 
@@ -16,9 +16,9 @@ namespace SmartAPI.Services.Exceptions.UserExceptions
 
             switch (ex.StatusCode) {
                 case HttpStatusCode.NotFound:
-                    return new NotFoundObjectResult(new Response { Success = false, Data = null, Message = ex.Message });
+                    return new NotFoundObjectResult(new Response { Success = false, Data = null, Message = "Usuário não Encontrado" });
                 case HttpStatusCode.BadRequest:
-                    return new BadRequestObjectResult(new Response { Success = false, Data = null, Message = ex.Message });
+                    return new BadRequestObjectResult(new Response { Success = false, Data = null, Message = "Ocorreu um erro ao tentar processar a solicitação" });
                 default:
                     return new StatusCodeResult(500);
             }
