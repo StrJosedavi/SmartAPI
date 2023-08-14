@@ -6,6 +6,7 @@ using SmartAPI.Repository.Interface;
 using SmartAPI.Services;
 using SmartAPI.Services.Interface;
 using System.Reflection;
+using SmartAPI.Ioc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +20,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+DependencyInjectionExtensions.ConfigureServiceDependencies(builder.Services);
 
 builder.Services.AddSwaggerGen(c =>
 {
