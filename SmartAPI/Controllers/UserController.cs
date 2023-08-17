@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartAPI.Data.Entity;
 using SmartAPI.Models.Request;
 using SmartAPI.Models.Result;
@@ -55,6 +56,7 @@ namespace SmartAPI.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
+        [Authorize]
         public IActionResult GetUser(long userId)
         {
             try
