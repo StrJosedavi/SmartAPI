@@ -4,7 +4,7 @@ using SmartAPI.Data.Entity;
 using SmartAPI.Models.Request;
 using SmartAPI.Models.Result;
 using SmartAPI.Services;
-using SmartAPI.Services.Exceptions.UserExceptions;
+using SmartAPI.Services.Exceptions;
 using SmartAPI.Services.Interface;
 
 namespace SmartAPI.Controllers

@@ -2,19 +2,22 @@
 using SmartAPI.Models.Result;
 using System.Net;
 
-namespace SmartAPI.Services.Exceptions.UserExceptions
+namespace SmartAPI.Services.Exceptions
 {
     public class UserException : Exception
     {
         public HttpStatusCode StatusCode { get; }
 
-        public UserException(HttpStatusCode statusCode) {
+        public UserException(HttpStatusCode statusCode)
+        {
             StatusCode = statusCode;
         }
 
-        public static IActionResult HandleCustomException(UserException ex) {
+        public static IActionResult HandleCustomException(UserException ex)
+        {
 
-            switch (ex.StatusCode) {
+            switch (ex.StatusCode)
+            {
                 case HttpStatusCode.NotFound:
                     return new NotFoundObjectResult(new Response { Success = false, Data = null, Message = "Usuário não Encontrado" });
                 case HttpStatusCode.BadRequest:

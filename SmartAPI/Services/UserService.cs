@@ -3,7 +3,7 @@ using SmartAPI.Data.Entity;
 using SmartAPI.Models.Request;
 using SmartAPI.Repository;
 using SmartAPI.Repository.Interface;
-using SmartAPI.Services.Exceptions.UserExceptions;
+using SmartAPI.Services.Exceptions;
 using SmartAPI.Services.Interface;
 using StatusCode = System.Net.HttpStatusCode;
 
