@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SmartAPI.Migrations
-{
+namespace SmartAPI.Migrations {
     /// <inheritdoc />
     public partial class ContextUser : Migration
     {

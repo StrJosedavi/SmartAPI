@@ -1,8 +1,8 @@
-﻿using SmartAPI.Services.Interface;
-using SmartAPI.Services;
-using SmartAPI.Repository.Interface;
+﻿using SmartAPI.Auth.Service;
 using SmartAPI.Repository;
-using SmartAPI.Auth.Service;
+using SmartAPI.Repository.Interface;
+using SmartAPI.Services;
+using SmartAPI.Services.Interface;
 
 namespace SmartAPI.Ioc {
     public class DependencyInjectionExtensions {

@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace SmartAPI.Auth.Service
-{
+namespace SmartAPI.Auth.Service {
     public class AuthenticateService : IAuthenticateService {
 
         private readonly IConfiguration _configuration;
