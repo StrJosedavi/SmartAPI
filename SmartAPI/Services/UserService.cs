@@ -5,6 +5,8 @@ using SmartAPI.Repository;
 using SmartAPI.Repository.Interface;
 using SmartAPI.Services.Exceptions.UserExceptions;
 using SmartAPI.Services.Interface;
+using StatusCode = System.Net.HttpStatusCode;
+
 
 namespace SmartAPI.Services
 {
@@ -26,14 +28,14 @@ namespace SmartAPI.Services
         {
             if (userId <= 0)
             {
-                throw new UserInvalidException();
+                throw new UserException(StatusCode.BadRequest);
             }
 
             User? user = _userRepository.GetUserById(userId);
 
             if (user == null)
             {
-                throw new UserNotFoundException();
+                throw new UserException(StatusCode.NotFound);
             }
 
             return user;
