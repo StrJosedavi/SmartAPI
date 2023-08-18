@@ -13,7 +13,8 @@ namespace SmartAPI.Repository
 
         }
 
-        public void Save(User user){
+        public void Save(User user) 
+        {
             try
             {
                 _dbContext.User.Add(user);
@@ -24,10 +25,15 @@ namespace SmartAPI.Repository
             }    
         }
 
-        public User? GetUserById(long Id) {
-   
-            return _dbContext.User.Find(Id); 
-          
+        public User? GetUserById(long Id) 
+        {
+            try 
+            {
+                return _dbContext.User.Find(Id);
+            }
+            catch(Exception ex) {
+                throw ex;
+            }
         }
     }
 }

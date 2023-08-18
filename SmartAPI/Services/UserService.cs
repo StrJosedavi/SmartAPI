@@ -24,21 +24,26 @@ namespace SmartAPI.Services
             //_userRepository.Save();
         }
 
-        public User GetUser(long userId)
+        public User GetUser(long userId) 
         {
-            if (userId <= 0)
+            try 
             {
-                throw new UserException(StatusCode.BadRequest);
+                if (userId <= 0) {
+                    throw new UserException(StatusCode.BadRequest);
+                }
+
+                User? user = _userRepository.GetUserById(userId);
+
+                if (user == null) {
+                    throw new UserException(StatusCode.NotFound);
+                }
+
+                return user;
             }
-
-            User? user = _userRepository.GetUserById(userId);
-
-            if (user == null)
+            catch(Exception ex) 
             {
-                throw new UserException(StatusCode.NotFound);
+                throw ex;
             }
-
-            return user;
         }
     }
 }
