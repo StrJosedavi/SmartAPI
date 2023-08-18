@@ -39,7 +39,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -87,6 +86,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
