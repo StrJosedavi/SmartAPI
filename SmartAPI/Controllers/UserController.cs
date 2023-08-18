@@ -28,6 +28,7 @@ namespace SmartAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
+        [AllowAnonymous]
         [ProducesResponseType(200, Type = typeof(Response))]    
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
@@ -57,7 +58,7 @@ namespace SmartAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [Authorize]
-        public IActionResult GetUser(long userId)
+        public IActionResult GetUser([FromQuery] long userId)
         {
             try
             {   

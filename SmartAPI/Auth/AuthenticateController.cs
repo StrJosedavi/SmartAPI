@@ -16,6 +16,11 @@ namespace SmartAPI.Auth {
             _configuration = configuration;
         }
 
+
+        /// <summary>
+        /// Geração de token de autenticação
+        /// </summary>
+        /// <returns>Sucesso na geração de token</returns>
         [AllowAnonymous]
         [Route("[action]")]
         [HttpGet]
