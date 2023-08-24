@@ -23,9 +23,11 @@ git clone https://github.com/StrJosedavi/SmartAPI.git
 ``dotnet ef database update``
 
 ## Utilização
-#### 1. Inicie a aplicação executando a solution pelo Visual Studio 2022
 
-#### 2. Ao executar irá abrir uma nova aba em seu navegador da documentação Swagger de métodos: https://localhost:7008/swagger/index.html
+VS 2022:
+#### 1. Inicie a aplicação executando a solution pelo Visual Studio 2022.
+
+#### 2. Ao executar, irá abrir uma guia em seu navegador, contendo todos os endpoints da aplicação.
 
 ## Contribuição
 ##### Se você encontrar um bug ou quiser contribuir com o projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request.
