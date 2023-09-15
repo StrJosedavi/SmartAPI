@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using SmartAPI.Data.Entity;
 using SmartAPI.Models.Request;
 using SmartAPI.Models.Result;
-using SmartAPI.Services.Exceptions;
 using SmartAPI.Services.Interface;
+using SmartAPI.Services.Messages;
+using System.ComponentModel.DataAnnotations;
 
 namespace SmartAPI.Controllers {
     [ApiController]
@@ -32,15 +33,9 @@ namespace SmartAPI.Controllers {
         [ProducesResponseType(500)]
         public IActionResult Register(UserRegisterRequest userRegisterRequest)
         {
-            try
-            {
-                _userService.Register(userRegisterRequest);
-                return Ok(new Response(){ Success = true, Data = null, Message = "Usuário registrado com sucesso" });
-            }
-            catch
-            {
-                return BadRequest(new Response() { Success = false, Data = null, Message = "Falha na criação de usuário" });
-            }
+            _userService.Register(userRegisterRequest);
+
+            return Ok(new Response(){ Success = true, Data = null, Message = UserMessage.CREATE});
         }
 
         /// <summary>
@@ -56,18 +51,11 @@ namespace SmartAPI.Controllers {
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [Authorize]
-        public IActionResult GetUser([FromQuery] long userId)
+        public IActionResult GetUser([FromQuery][Required(ErrorMessage = "Necessário UserId")][Range(1, int.MaxValue)] long userId)
         {
-            try
-            {   
-                User user = _userService.GetUser(userId);
+            User user = _userService.GetUser(userId);
 
-                return Ok(new Response() { Success = true, Data = user, Message = "Usuário encontrado com sucesso." });
-            }
-            catch(UserException ex)
-            {
-                return UserException.HandleCustomException(ex);
-            }
+            return Ok(new Response() { Success = true, Data = user, Message = UserMessage.FOUND });
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using SmartAPI.Data;
+﻿using Microsoft.Data.SqlClient;
+using SmartAPI.Data;
 using SmartAPI.Data.Entity;
 using SmartAPI.Repository.Interface;
 
@@ -31,7 +32,7 @@ namespace SmartAPI.Repository
             {
                 return _dbContext.User.Find(Id);
             }
-            catch(Exception ex) {
+            catch(SqlException ex) {
                 throw ex;
             }
         }
