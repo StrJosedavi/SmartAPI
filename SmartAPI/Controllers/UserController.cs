@@ -51,7 +51,7 @@ namespace SmartAPI.Controllers {
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [Authorize]
-        public IActionResult GetUser([FromQuery][Required(ErrorMessage = "Necessário UserId")][Range(1, int.MaxValue)] long userId)
+        public IActionResult GetUser([FromQuery][Required(ErrorMessage = "Necessário UserId")][Range(1, long.MaxValue)] long userId)
         {
             User user = _userService.GetUser(userId);
 
