@@ -74,5 +74,19 @@
 dotnet ef database update  
 ```
 
+## Referências
+
+- [common-web-application-architectures](https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures)
+- [.NET Download](https://dotnet.microsoft.com/pt-br/download/dotnet)
+- [AspNet-Core-Tutorials](https://learn.microsoft.com/pt-br/aspnet/core/tutorials/first-web-api?view=aspnetcore-7.0&tabs=visual-studio)
+- [Documentation ASP.NET Core](https://learn.microsoft.com/pt-br/aspnet/core/?view=aspnetcore-7.0)
+- [Documentation .NET](https://learn.microsoft.com/en-us/dotnet/)
+- [Documentation Entity Framework](https://learn.microsoft.com/en-us/ef/)
+- [Documentation SQL SERVER](https://learn.microsoft.com/en-us/sql/sql-server/?view=sql-server-ver16)
+- [Launch Json VSCode](https://code.visualstudio.com/docs/csharp/debugger-settings)
+- [GitHub WorkFlow](https://docs.github.com/en/actions/using-workflows)
+- [Documentation Swagger](https://swagger.io/docs/)
+- [Documentation Xunit](https://xunit.net/#documentation)
+
 ## Contribuição
 #### Se você encontrar um bug ou quiser contribuir com o projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request.
