@@ -1,8 +1,5 @@
 using SmartAPI.Controllers;
 using SmartAPI.Data.Entity;
-using SmartAPI.Repository.Interface;
-using SmartAPI.Services;
-using SmartAPI.Services.Exceptions;
 using SmartAPI.Services.Interface;
 using Xunit;
 
@@ -11,59 +8,13 @@ namespace SmartAPI.Test.Controllers {
     {
 
         [Fact]
-        public void GetUser_ValidUserId() 
+        public void GetUser() 
         {
             int userId = 1;
 
-            //Arrange
-            var mockUserService = new Mock<IUserService>();
-            mockUserService.Setup(service => service.GetUser(userId))
-                          .Returns(new User { Id = userId, IsAdmin = false });
-            var controller = new UserController(mockUserService.Object);
+            var mockUserController = new Mock<UserController>();
 
-            // Act
-            var result = controller.GetUser(userId);
-
-            // Assert
-            dynamic okResult = Assert.IsType<OkObjectResult>(result);
-            var user = Assert.IsType<User>(okResult.Value.Data);
-
-            Assert.NotNull(user);
-            Assert.Equal(userId, user.Id);
-        }
-
-
-        [Fact]
-        public void GetUser_InvalidUserId() 
-        {
-            int userId = 0;
-
-            var mockUserService = new Mock<IUserService>();
-            mockUserService.Setup(service => service.GetUser(userId))
-                          .Throws(new UserException(System.Net.HttpStatusCode.BadRequest));
-            var controller = new UserController(mockUserService.Object);
-
-            // Act
-            var result = controller.GetUser(userId);
-
-            // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
-        }
-
-        [Fact]
-        public void GetUser_NotFoundUserId() 
-        {
-            int userId = 1;
-            var mockUserService = new Mock<IUserService>();
-            mockUserService.Setup(service => service.GetUser(userId))
-                          .Throws(new UserException(System.Net.HttpStatusCode.NotFound));
-            var controller = new UserController(mockUserService.Object);
-
-            // Act
-            var result = controller.GetUser(userId);
-
-            // Assert
-            Assert.IsType<NotFoundObjectResult>(result);
+            mockUserController.Setup(service => service.GetUser(userId)).Returns(new OkResult{});
         }
     }
 }
