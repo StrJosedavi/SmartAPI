@@ -1,34 +1,71 @@
-﻿using System.Text.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using System.Net;
+using System.Text.Json;
 
 public class ErrorHandlerMiddleware {
 
     private readonly RequestDelegate _next;
 
-    public ErrorHandlerMiddleware(RequestDelegate next) {
+    public ErrorHandlerMiddleware(RequestDelegate next) 
+    {
         _next = next;
     }
 
-    public async Task InvokeAsync(HttpContext context) {
+    public async Task InvokeAsync(HttpContext context)
+    {
 
-        try {
+        try 
+        {
             await _next(context);
         }
-        catch (Exception ex) {
+        catch (HttpRequestException ex) 
+        {
+            await HandleExceptionAsync(context, ex);
+        }
+        catch (SqlException ex)
+        {
             await HandleExceptionAsync(context, ex);
         }
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception exception) 
+    private static Task HandleExceptionAsync(HttpContext context, HttpRequestException exception) 
     {
+
+        ObjectResult JsonResult;
+
+        switch (exception.StatusCode) 
+        {
+            case HttpStatusCode.NotFound:
+                JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status404NotFound };
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                break;
+            case HttpStatusCode.BadRequest:
+                JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status400BadRequest };
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                break;
+            default:
+                JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status500InternalServerError };
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                break;
+        }
+
         context.Response.ContentType = "application/json";
+
+        var json = JsonSerializer.Serialize(JsonResult);
+        return context.Response.WriteAsync(json);
+    }
+
+    private static Task HandleExceptionAsync(HttpContext context, SqlException exception) 
+    {
+
+        ObjectResult JsonResult;
+        JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status500InternalServerError };
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+   
+        context.Response.ContentType = "application/json";
 
-        var errorResponse = new {
-            Message = "Ocorreu um erro interno na aplicação.",
-            ExceptionMessage = exception.Message
-        };
-
-        var json = JsonSerializer.Serialize(errorResponse);
+        var json = JsonSerializer.Serialize(JsonResult);
         return context.Response.WriteAsync(json);
     }
 }

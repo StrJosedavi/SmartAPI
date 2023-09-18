@@ -1,10 +1,10 @@
-﻿using SmartAPI.Data.Entity;
+﻿using Microsoft.Data.SqlClient;
+using SmartAPI.Data.Entity;
 using SmartAPI.Models.Request;
 using SmartAPI.Repository.Interface;
-using SmartAPI.Services.Exceptions;
 using SmartAPI.Services.Interface;
-using StatusCode = System.Net.HttpStatusCode;
-
+using SmartAPI.Services.Messages;
+using System.Net;
 
 namespace SmartAPI.Services {
     public class UserService : IUserService
@@ -25,19 +25,20 @@ namespace SmartAPI.Services {
         {
             try 
             {
-                if (userId <= 0) {
-                    throw new UserException(StatusCode.BadRequest);
-                }
 
                 User? user = _userRepository.GetUserById(userId);
 
                 if (user == null) {
-                    throw new UserException(StatusCode.NotFound);
+                    throw new HttpRequestException(UserMessage.NOTFOUND, null, HttpStatusCode.NotFound);
                 }
 
                 return user;
             }
-            catch(Exception ex) 
+            catch (HttpRequestException ex)
+            {
+                throw ex;
+            }
+            catch (SqlException ex)
             {
                 throw ex;
             }
