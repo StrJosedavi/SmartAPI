@@ -89,4 +89,4 @@ dotnet ef database update
 - [Documentation Xunit](https://xunit.net/#documentation)
 
 ## Contribuição
-#### Se você encontrar um bug ou quiser contribuir com o projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request.
+#### Se você encontrar um bug ou quiser contribuir com o projeto, sinta-se à vontade para abrir uma issue.
