@@ -17,7 +17,7 @@ git clone https://github.com/StrJosedavi/SmartAPI.git
 
 #### 3. Configure a conexão com o banco de dados SQLServer no arquivo appsettingsDevelopment.json:
 
-```csharp
+```json
 "ConnectionStrings": {
     "SqlServer": "Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;TrustServerCertificate=True;"
  },
