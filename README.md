@@ -31,10 +31,48 @@ dotnet ef database update
 
 ## Utilização
 
-VS 2022:
+### VS 2022:
 #### 1. Inicie a aplicação executando a solution pelo Visual Studio 2022.
 
 #### 2. Ao executar, irá abrir uma guia em seu navegador do SWAGGER, contendo todos os endpoints da aplicação.
+
+### VS Code:
+#### 1. Build a aplicação digitando o seguinte comando no terminal:
+
+```powershell
+dotnet build
+```
+obs: atente-se de estar no mesmo caminho do arquivo csproj principal da aplicação.
+
+#### 2. Crie ou edite o arquivo launch.json dentro da pasta .vscode, com o seguinte json:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch SmartAPI",
+      "program": "${workspaceFolder}/SmartAPI/bin/Debug/net6.0/SmartAPI.dll",
+      "request": "launch",
+      "type": "coreclr",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "cwd": "${workspaceFolder}/SmartAPI"
+    }
+  ]
+}
+```
+
+#### 3. Busque a opção de Run And Debug do Vs Code e na opção Launch SmartAPI, execute a aplicação:
+
+![image](https://github.com/StrJosedavi/SmartAPI/assets/97465437/71c25a6c-a57a-4c9c-b961-93dc22f04cbe)
+
+#### 4. Após isso, só utilizar a seguinte url para visualizar os métodos no swagger:
+
+```url
+https://localhost:7218/swagger/index.html
+```
 
 ## Contribuição
 ##### Se você encontrar um bug ou quiser contribuir com o projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request.
