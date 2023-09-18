@@ -1,5 +1,5 @@
 # SmartAPI
-#### Projeto de uma API para atender as necessidades de uma aplicação WEB (Pura para serviços), escrita em C# utilizando o framework ASP.NET Core e o banco de dados SQLServer.
+#### Projeto de uma API Pura para serviços, com o objetivo de ser um SaaS de controle de gastos, escrita em C# utilizando o framework ASP.NET Core e o banco de dados SQLServer.
 
 # Arquitetura Utilizada para esse projeto:
 (Layered Architecture)
