@@ -22,31 +22,31 @@
 ### VS Code:
 
 - Build a aplicação digitando o seguinte comando no terminal:
-    - obs: atente-se de antes de executar o comando, estar no mesmo caminho do arquivo .csproj principal da aplicação.
-
+  ##### Atente-se de antes de executar o comando, estar no mesmo caminho do arquivo .csproj principal da aplicação.
+    
     ```powershell
     dotnet build
     ```
 
 - Crie ou edite o arquivo launch.json dentro da pasta .vscode, com o seguinte json:
 
-    ```json
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
     {
-      "version": "0.2.0",
-      "configurations": [
-        {
-          "name": "Launch SmartAPI",
-          "program": "${workspaceFolder}/SmartAPI/bin/Debug/net6.0/SmartAPI.dll",
-          "request": "launch",
-          "type": "coreclr",
-          "env": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-          },
-          "cwd": "${workspaceFolder}/SmartAPI"
-        }
-      ]
+      "name": "Launch SmartAPI",
+      "program": "${workspaceFolder}/SmartAPI/bin/Debug/net6.0/SmartAPI.dll",
+      "request": "launch",
+      "type": "coreclr",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "cwd": "${workspaceFolder}/SmartAPI"
     }
-    ```
+  ]
+}
+```
 
 - Busque a opção de Run And Debug do Vs Code e na opção Launch SmartAPI, execute a aplicação:
 
@@ -62,17 +62,17 @@
 
 #### 2. Configure a conexão com o banco de dados SQLServer no arquivo appsettingsDevelopment.json:
 
-    ```json
-    "ConnectionStrings": {
-        "SqlServer": "Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;TrustServerCertificate=True;"
-     },
-     ```
+```json
+"ConnectionStrings": {    
+    "SqlServer": "Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;TrustServerCertificate=True;"        
+},
+```
  
 #### 3. Execute o comando abaixo na pasta raiz do projeto para criar as tabelas no banco de dados:
 
-    ```powershell
-    dotnet ef database update
-    ```
+```powershell
+dotnet ef database update  
+```
 
 ## Contribuição
-##### Se você encontrar um bug ou quiser contribuir com o projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request.
+#### Se você encontrar um bug ou quiser contribuir com o projeto, sinta-se à vontade para abrir uma issue ou enviar um pull request.
