@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using SmartAPI.Data.Entity;
+using SmartAPI.Middleware.ExceptionObjects;
 using SmartAPI.Models.Request;
 using SmartAPI.Repository.Interface;
 using SmartAPI.Services.Interface;
@@ -15,10 +16,19 @@ namespace SmartAPI.Services {
             _userRepository = userRepository;
         }
 
-        public void Register(UserRegisterRequest userRegisterRequest)
+        public void Register(UserRegisterRequest userRegisterRequest) 
         {
-            
-            //_userRepository.Save();
+            try {
+
+                //_userRepository.Save();
+
+            }
+            catch (HandleExceptionGeneric ex) {
+                throw ex;
+            }
+            catch(SqlException ex) {
+                throw ex;
+            }
         }
 
         public User GetUser(long userId) 
@@ -29,12 +39,12 @@ namespace SmartAPI.Services {
                 User? user = _userRepository.GetUserById(userId);
 
                 if (user == null) {
-                    throw new HttpRequestException(UserMessage.NOTFOUND, null, HttpStatusCode.NotFound);
+                    throw new HandleExceptionGeneric(UserMessage.NotFound, HttpStatusCode.NotFound);
                 }
 
                 return user;
             }
-            catch (HttpRequestException ex)
+            catch (HandleExceptionGeneric ex)
             {
                 throw ex;
             }

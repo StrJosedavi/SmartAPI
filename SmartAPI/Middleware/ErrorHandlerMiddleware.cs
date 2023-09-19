@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
+using SmartAPI.Middleware.ExceptionObjects;
+using SmartAPI.Middleware.ResultException;
+using SmartAPI.Services.Messages;
 using System.Net;
 using System.Text.Json;
 
 public class ErrorHandlerMiddleware {
 
     private readonly RequestDelegate _next;
+
 
     public ErrorHandlerMiddleware(RequestDelegate next) 
     {
@@ -19,50 +22,50 @@ public class ErrorHandlerMiddleware {
         {
             await _next(context);
         }
-        catch (HttpRequestException ex) 
+        catch (HandleExceptionGeneric ex) 
         {
             await HandleExceptionAsync(context, ex);
         }
-        catch (SqlException ex)
-        {
+        catch (SqlException ex) {
             await HandleExceptionAsync(context, ex);
         }
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, HttpRequestException exception) 
+    private static Task HandleExceptionAsync(HttpContext context, HandleExceptionGeneric exception) 
     {
+        //Utilizar o parametro exception depois, para registrar exceptions na base de dados
 
-        ObjectResult JsonResult;
+        HandleExceptionObjectResult jsonResult;
 
         switch (exception.StatusCode) 
         {
             case HttpStatusCode.NotFound:
-                JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status404NotFound };
+                jsonResult = new HandleExceptionObjectResult() { Message = exception.Message };
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 break;
             case HttpStatusCode.BadRequest:
-                JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status400BadRequest };
+                jsonResult = new HandleExceptionObjectResult() { Message = exception.Message };
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 break;
             default:
-                JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status500InternalServerError };
+                jsonResult = new HandleExceptionObjectResult() { Message = InternalMessage.Generic};
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 break;
         }
 
         context.Response.ContentType = "application/json";
 
-        var json = JsonSerializer.Serialize(JsonResult);
+        var json = JsonSerializer.Serialize(jsonResult);
         return context.Response.WriteAsync(json);
     }
 
     private static Task HandleExceptionAsync(HttpContext context, SqlException exception) 
     {
+        //Utilizar o parametro exception depois, para registrar exceptions na base de dados
 
-        ObjectResult JsonResult;
-        JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status500InternalServerError };
+        HandleExceptionObjectResult JsonResult = new HandleExceptionObjectResult() { Message = InternalMessage.SQLError};
+      
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-   
         context.Response.ContentType = "application/json";
 
         var json = JsonSerializer.Serialize(JsonResult);

@@ -22,14 +22,14 @@ namespace SmartAPI.Services.Messages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class UserMessage {
+    public class InternalMessage {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal UserMessage() {
+        internal InternalMessage() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace SmartAPI.Services.Messages {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SmartAPI.Services.Messages.UserMessage", typeof(UserMessage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SmartAPI.Services.Messages.InternalMessage", typeof(InternalMessage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,20 @@ namespace SmartAPI.Services.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usuário criado com sucesso.
+        ///   Looks up a localized string similar to Erro ao processar a requisição.
         /// </summary>
-        public static string Create {
+        public static string Generic {
             get {
-                return ResourceManager.GetString("Create", resourceCulture);
+                return ResourceManager.GetString("Generic", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usuário deletado com sucesso.
+        ///   Looks up a localized string similar to Erro na comunicação interna.
         /// </summary>
-        public static string Delete {
+        public static string SQLError {
             get {
-                return ResourceManager.GetString("Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Usuário encontrado.
-        /// </summary>
-        public static string Found {
-            get {
-                return ResourceManager.GetString("Found", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UserId Inválido.
-        /// </summary>
-        public static string Invalid {
-            get {
-                return ResourceManager.GetString("Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Usuário não encontrado.
-        /// </summary>
-        public static string NotFound {
-            get {
-                return ResourceManager.GetString("NotFound", resourceCulture);
+                return ResourceManager.GetString("SQLError", resourceCulture);
             }
         }
     }

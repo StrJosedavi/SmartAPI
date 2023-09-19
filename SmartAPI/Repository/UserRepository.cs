@@ -21,7 +21,7 @@ namespace SmartAPI.Repository
                 _dbContext.User.Add(user);
                 _dbContext.SaveChanges();
             }
-            catch (Exception ex) 
+            catch (SqlException ex) 
             {
                 throw ex;
             }    

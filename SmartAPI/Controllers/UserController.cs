@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartAPI.Data.Entity;
+using SmartAPI.Middleware.ResultException;
 using SmartAPI.Models.Request;
 using SmartAPI.Models.Result;
 using SmartAPI.Services.Interface;
 using SmartAPI.Services.Messages;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 
 namespace SmartAPI.Controllers {
     [ApiController]
@@ -28,34 +30,35 @@ namespace SmartAPI.Controllers {
         [HttpPost]
         [Route("[action]")]
         [AllowAnonymous]
-        [ProducesResponseType(200, Type = typeof(Response))]    
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(200, Type = typeof(Response))]
+        [ProducesResponseType(404, Type = typeof(HandleExceptionObjectResult))]
+        [ProducesResponseType(400, Type = typeof(HandleExceptionObjectResult))]
+        [ProducesResponseType(500, Type = typeof(HandleExceptionObjectResult))]
         public IActionResult Register(UserRegisterRequest userRegisterRequest)
         {
-            _userService.Register(userRegisterRequest);
+            //_userService.Register(userRegisterRequest);
 
-            return Ok(new Response(){ Success = true, Data = null, Message = UserMessage.CREATE});
+            return Ok(new Response(){ Success = true, Data = null, Message = UserMessage.Create});
         }
 
         /// <summary>
         /// Busca de usuário
         /// </summary>
-        /// <param name="userId">Dados de usuário para busca.</param>
+        /// <param name="getUserByIdRequest">Dados de usuário para busca.</param>
         /// <returns>Sucesso na busca de usuário</returns>
 
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(200, Type = typeof(Response))]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(404, Type = typeof(HandleExceptionObjectResult))]
+        [ProducesResponseType(400, Type = typeof(HandleExceptionObjectResult))]
+        [ProducesResponseType(500, Type = typeof(HandleExceptionObjectResult))]
         [Authorize]
-        public IActionResult GetUser([FromQuery][Required(ErrorMessage = "Necessário UserId")][Range(1, long.MaxValue)] long userId)
+        public IActionResult GetUser([FromQuery] GetUserByIdRequest getUserByIdRequest)
         {
-            User user = _userService.GetUser(userId);
+            User user = _userService.GetUser(getUserByIdRequest.UserId);
 
-            return Ok(new Response() { Success = true, Data = user, Message = UserMessage.FOUND });
+            return Ok(new Response() { Success = true, Data = user, Message = UserMessage.Found });
         }
 
     }

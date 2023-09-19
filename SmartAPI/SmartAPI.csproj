@@ -24,6 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Services\Messages\InternalMessage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InternalMessage.resx</DependentUpon>
+    </Compile>
     <Compile Update="Services\Messages\UserMessage.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -32,6 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Services\Messages\InternalMessage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InternalMessage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Services\Messages\UserMessage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UserMessage.Designer.cs</LastGenOutput>
