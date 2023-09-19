@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace SmartAPI.Auth.Service {
+namespace SmartAPI.Security.Service {
     public class AuthenticateService : IAuthenticateService {
 
         private readonly IConfiguration _configuration;
@@ -11,7 +11,7 @@ namespace SmartAPI.Auth.Service {
             _configuration = configuration;
         }
 
-        public string GenerateJwtToken() {
+        public dynamic GenerateJwtToken() {
 
             var jwtSettings = _configuration.GetSection("JwtSettings");
 
@@ -26,7 +26,10 @@ namespace SmartAPI.Auth.Service {
                 signingCredentials: keyEncrypted
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            string tokenJwtWrite = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return new { Jwt = tokenJwtWrite, Date = expires };
         }
+
     }
 }

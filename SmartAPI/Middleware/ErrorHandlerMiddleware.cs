@@ -9,7 +9,6 @@ public class ErrorHandlerMiddleware {
 
     private readonly RequestDelegate _next;
 
-
     public ErrorHandlerMiddleware(RequestDelegate next) 
     {
         _next = next;

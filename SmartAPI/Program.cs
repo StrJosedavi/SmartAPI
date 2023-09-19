@@ -80,6 +80,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//Middleware de segurança
+app.UseMiddleware<AuthorizationMiddleware>();
 //Middleware de Excessões genéricas para tratamento de erros mais internos
 app.UseMiddleware<ErrorHandlerMiddleware>();
 

@@ -1,6 +1,6 @@
-﻿using SmartAPI.Auth.Service;
-using SmartAPI.Repository;
+﻿using SmartAPI.Repository;
 using SmartAPI.Repository.Interface;
+using SmartAPI.Security.Service;
 using SmartAPI.Services;
 using SmartAPI.Services.Interface;
 

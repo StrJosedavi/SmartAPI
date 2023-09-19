@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SmartAPI.Auth.Service;
+using SmartAPI.Security.Service;
 
-namespace SmartAPI.Auth {
+namespace SmartAPI.Security {
     [Route("[controller]")]
     [ApiController]
     public class AuthenticateController : ControllerBase {
@@ -22,8 +22,8 @@ namespace SmartAPI.Auth {
         [HttpGet]
         public IActionResult GenerateToken() 
         {
-            var token = _authenticationService.GenerateJwtToken();
-            return Ok(new { Token = token });
+            dynamic token = _authenticationService.GenerateJwtToken();
+            return Ok(new { Token = token.Jwt, DateExp = token.Date});
         }
 
        
