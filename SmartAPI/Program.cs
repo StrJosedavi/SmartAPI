@@ -14,14 +14,15 @@ builder.Services.AddEndpointsApiExplorer();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
-//Adicionar schema de autenticação da API
+//Adicionar schema de autenticaï¿½ï¿½o da API
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new TokenValidationParameters {
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
@@ -36,26 +37,29 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
-//Injeção de dependências
+//Injeï¿½ï¿½o de dependï¿½ncias
 DependencyInjectionExtensions.ConfigureServiceDependencies(builder.Services);
 
-builder.Services.AddSwaggerGen(c => {
+builder.Services.AddSwaggerGen(c =>
+{
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Documentation SmartAPI", Version = "v1" });
 
-    // Arquivo XML de documentação
+    // Arquivo XML de documentaï¿½ï¿½o
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 
 
-    var securityScheme = new OpenApiSecurityScheme {
+    var securityScheme = new OpenApiSecurityScheme
+    {
         Name = "Authorization",
         Description = "Enter 'Bearer {token}'",
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Reference = new OpenApiReference {
+        Reference = new OpenApiReference
+        {
             Type = ReferenceType.SecurityScheme,
             Id = "Bearer"
         }
@@ -72,15 +76,13 @@ builder.Services.AddSwaggerGen(c => {
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
-//Middleware de Excessões genéricas para tratamento de erros mais internos
+//Middleware de Excessï¿½es genï¿½ricas para tratamento de erros mais internos
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseAuthentication();
