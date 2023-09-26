@@ -1,10 +1,14 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using API.Data.Entity.Enums;
+using Microsoft.Data.SqlClient;
 using SmartAPI.Data.Entity;
 using SmartAPI.Models.Request;
 using SmartAPI.Repository.Interface;
 using SmartAPI.Services.Interface;
 using SmartAPI.Services.Messages;
+using SmartAPI.Util;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SmartAPI.Services {
     public class UserService : IUserService
@@ -17,8 +21,29 @@ namespace SmartAPI.Services {
 
         public void Register(UserRegisterRequest userRegisterRequest)
         {
-            
-            //_userRepository.Save();
+            try 
+            {
+                User newUser = new User();
+                UserCredential credential = new UserCredential();
+
+                if (userRegisterRequest.Password != userRegisterRequest.ConfirmPassword)
+                    throw new Exception();
+
+                newUser.Initialize(UserStatus.Active, "User");
+                newUser = _userRepository.Save(newUser);
+             
+                string PassEncrypt = Encrypt.GenerateHash(userRegisterRequest.Password);
+              
+                credential.Initialize(userRegisterRequest.Login, PassEncrypt, newUser);
+                credential = _userRepository.SaveCredential(credential);
+
+                newUser.Credential = credential;
+                _userRepository.UpdateUser(newUser);
+            }
+            catch(Exception ex) 
+            {
+                throw ex;
+            }   
         }
 
         public User GetUser(long userId) 

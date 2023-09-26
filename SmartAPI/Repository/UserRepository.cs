@@ -14,17 +14,48 @@ namespace SmartAPI.Repository
 
         }
 
-        public void Save(User user) 
+        public User Save(User user) 
         {
-            try
-            {
+            try {
+
                 _dbContext.User.Add(user);
                 _dbContext.SaveChanges();
+
+                return user;
             }
             catch (Exception ex) 
             {
                 throw ex;
             }    
+        }
+
+        public UserCredential SaveCredential(UserCredential credential) 
+        {
+            try {
+
+                _dbContext.UserCredential.Add(credential);
+                _dbContext.SaveChanges();
+
+                return credential;
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+        }
+
+
+        public User UpdateUser(User user) 
+        {
+            try {
+
+                _dbContext.User.Update(user);
+                _dbContext.SaveChanges();
+
+                return user;
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
         }
 
         public User? GetUserById(long Id) 

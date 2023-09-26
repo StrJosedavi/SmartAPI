@@ -35,7 +35,7 @@ namespace SmartAPI.Controllers {
         {
             _userService.Register(userRegisterRequest);
 
-            return Ok(new Response(){ Success = true, Data = null, Message = UserMessage.CREATE});
+            return Ok(new Response(){ Success = true, Message = UserMessage.CREATE});
         }
 
         /// <summary>

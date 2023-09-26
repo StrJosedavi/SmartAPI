@@ -1,4 +1,4 @@
-﻿namespace API.Domain.Entity.Enums
+﻿namespace API.Data.Entity.Enums
 {
     public enum UserStatus
     {
