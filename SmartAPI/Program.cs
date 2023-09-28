@@ -35,7 +35,7 @@ builder.Services.AddAuthentication(options =>
 
 //Contexto para acesso ao banco de dados
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //Inje��o de depend�ncias
 DependencyInjectionExtensions.ConfigureServiceDependencies(builder.Services);
