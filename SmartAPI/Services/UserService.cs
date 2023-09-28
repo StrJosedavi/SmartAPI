@@ -1,5 +1,4 @@
 ﻿using API.Data.Entity.Enums;
-using Microsoft.Data.SqlClient;
 using SmartAPI.Data.Entity;
 using SmartAPI.Models.Request;
 using SmartAPI.Repository.Interface;
@@ -37,7 +36,7 @@ namespace SmartAPI.Services {
                 credential.Initialize(userRegisterRequest.Login, PassEncrypt, newUser);
                 credential = _userRepository.SaveCredential(credential);
 
-                newUser.Credential = credential;
+                newUser.UserCredential = credential;
                 _userRepository.UpdateUser(newUser);
             }
             catch(Exception ex) 
@@ -63,7 +62,7 @@ namespace SmartAPI.Services {
             {
                 throw ex;
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 throw ex;
             }

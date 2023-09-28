@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using System.Net;
 using System.Text.Json;
 
@@ -23,10 +22,7 @@ public class ErrorHandlerMiddleware {
         {
             await HandleExceptionAsync(context, ex);
         }
-        catch (SqlException ex)
-        {
-            await HandleExceptionAsync(context, ex);
-        }
+
     }
 
     private static Task HandleExceptionAsync(HttpContext context, HttpRequestException exception) 
@@ -50,19 +46,6 @@ public class ErrorHandlerMiddleware {
                 break;
         }
 
-        context.Response.ContentType = "application/json";
-
-        var json = JsonSerializer.Serialize(JsonResult);
-        return context.Response.WriteAsync(json);
-    }
-
-    private static Task HandleExceptionAsync(HttpContext context, SqlException exception) 
-    {
-
-        ObjectResult JsonResult;
-        JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status500InternalServerError };
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-   
         context.Response.ContentType = "application/json";
 
         var json = JsonSerializer.Serialize(JsonResult);
