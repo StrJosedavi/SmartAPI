@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartAPI.Data.Entity;
+using SmartAPI.Data.Enum;
 
 namespace SmartAPI.Data
 {
@@ -13,14 +14,21 @@ namespace SmartAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
-            var enumToStringConverter = new EnumToStringConverter<UserStatus>();
+            var enumToStringUserStatus = new EnumToStringConverter<UserStatus>();
+            var enumToStringRole = new EnumToStringConverter<Role>();
 
             modelBuilder
                 .Entity<User>()
                 .Property(e => e.Status)
-                .HasConversion(enumToStringConverter);
+                .HasConversion(enumToStringUserStatus);
+
+            modelBuilder
+                .Entity<User>()
+                .Property(e => e.Role)
+                .HasConversion(enumToStringRole);
 
             base.OnModelCreating(modelBuilder);
+
         }
     }
 }
