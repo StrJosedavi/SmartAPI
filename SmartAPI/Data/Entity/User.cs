@@ -1,6 +1,7 @@
 ﻿using API.Data.Entity.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace SmartAPI.Data.Entity {
     public class User : BaseEntity 
@@ -11,6 +12,7 @@ namespace SmartAPI.Data.Entity {
         public string? Role { get; set; }
 
         [ForeignKey("UserCredentialId")]
+        [JsonIgnore]
         public UserCredential? UserCredential { get; set; }
 
         public User Initialize(UserStatus status, string role) 

@@ -5,7 +5,7 @@ namespace SmartAPI.Services.Interface
 {
     public interface IUserService
     {
-        public void Register(UserRegisterRequest userRegisterRequest);
+        public User Register(UserRegisterRequest userRegisterRequest);
         public User GetUser(long UserId);
     }
 }

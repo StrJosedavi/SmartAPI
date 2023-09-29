@@ -33,9 +33,9 @@ namespace SmartAPI.Controllers {
         [ProducesResponseType(500)]
         public IActionResult Register(UserRegisterRequest userRegisterRequest)
         {
-            _userService.Register(userRegisterRequest);
+            User user = _userService.Register(userRegisterRequest);
 
-            return Ok(new Response(){ Success = true, Message = UserMessage.CREATE});
+            return Ok(new Response(){ Success = true, Data = user, Message = UserMessage.CREATE});
         }
 
         /// <summary>

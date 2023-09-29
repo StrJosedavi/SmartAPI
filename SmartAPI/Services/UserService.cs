@@ -17,7 +17,7 @@ namespace SmartAPI.Services {
             _userRepository = userRepository;
         }
 
-        public void Register(UserRegisterRequest userRegisterRequest)
+        public User Register(UserRegisterRequest userRegisterRequest)
         {
             try 
             {
@@ -26,16 +26,14 @@ namespace SmartAPI.Services {
 
                 UserValidation.ValidateRequest(userRegisterRequest);
 
-                newUser.Initialize(UserStatus.Active, "User");
-                newUser = _userRepository.Save(newUser);
-             
                 string PassEncrypt = Encrypt.GenerateHash(userRegisterRequest.Password);
-              
-                credential.Initialize(userRegisterRequest.Login, PassEncrypt, newUser);
-                credential = _userRepository.SaveCredential(credential);
 
-                newUser.UserCredential = credential;
-                _userRepository.UpdateUser(newUser);
+                newUser.Initialize(UserStatus.Active, "User");
+                credential.Initialize(userRegisterRequest.Login, PassEncrypt, newUser);
+
+                newUser = _userRepository.Save(newUser, credential);
+
+                return newUser;
             }
             catch(Exception ex) 
             {
