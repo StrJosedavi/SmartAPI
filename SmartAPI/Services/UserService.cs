@@ -1,5 +1,6 @@
 ﻿using API.Data.Entity.Enums;
 using SmartAPI.Data.Entity;
+using SmartAPI.Data.Enum;
 using SmartAPI.Models.Request;
 using SmartAPI.Repository.Interface;
 using SmartAPI.Services.Interface;
@@ -28,7 +29,7 @@ namespace SmartAPI.Services {
 
                 string PassEncrypt = Encrypt.GenerateHash(userRegisterRequest.Password);
 
-                newUser.Initialize(UserStatus.Active, "User");
+                newUser.Initialize(UserStatus.Active, Role.User);
                 credential.Initialize(userRegisterRequest.Login, PassEncrypt, newUser);
 
                 newUser = _userRepository.Save(newUser, credential);
