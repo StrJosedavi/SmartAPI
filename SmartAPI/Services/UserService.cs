@@ -4,10 +4,9 @@ using SmartAPI.Models.Request;
 using SmartAPI.Repository.Interface;
 using SmartAPI.Services.Interface;
 using SmartAPI.Services.Messages;
+using SmartAPI.Services.Validations;
 using SmartAPI.Util;
 using System.Net;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace SmartAPI.Services {
     public class UserService : IUserService
@@ -25,8 +24,7 @@ namespace SmartAPI.Services {
                 User newUser = new User();
                 UserCredential credential = new UserCredential();
 
-                if (userRegisterRequest.Password != userRegisterRequest.ConfirmPassword)
-                    throw new Exception();
+                UserValidation.ValidateRequest(userRegisterRequest);
 
                 newUser.Initialize(UserStatus.Active, "User");
                 newUser = _userRepository.Save(newUser);
