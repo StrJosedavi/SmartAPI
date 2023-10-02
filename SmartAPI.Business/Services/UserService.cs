@@ -1,7 +1,10 @@
 ﻿using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.DTO;
 using SmartAPI.Business.Services.Messages;
+using SmartAPI.Business.Services.Validations;
+using SmartAPI.Business.Util;
 using SmartAPI.Infrastructure.Data.Entity;
+using SmartAPI.Infrastructure.Data.Enum;
 using SmartAPI.Infrastructure.Repository.Interface;
 using System.Net;
 
@@ -14,10 +17,27 @@ namespace SmartAPI.Business.Services {
             _userRepository = userRepository;
         }
 
-        public void Register(UserRegisterRequest userRegisterRequest)
+        public User Register(UserRegisterRequest userRegisterRequest)
         {
-            
-            //_userRepository.Save();
+
+            try {
+                User newUser = new User();
+                UserCredential credential = new UserCredential();
+
+                UserValidation.ValidateRequest(userRegisterRequest);
+
+                string PassEncrypt = Encrypt.GenerateHash(userRegisterRequest.Password);
+
+                newUser.Initialize(UserStatus.Active, Role.User);
+                credential.Initialize(userRegisterRequest.Username, PassEncrypt, newUser);
+
+                newUser = _userRepository.Save(newUser, credential);
+
+                return newUser;
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
         }
 
         public User GetUser(long userId) 

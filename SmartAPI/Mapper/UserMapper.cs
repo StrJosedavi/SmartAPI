@@ -7,9 +7,10 @@ namespace SmartAPI.Application.Mapper {
         public RequestMapperUserRegister.UserRegisterRequest UserRequestRegisterMapper(UserRegisterRequest userRegisterRequest) {
 
             return new RequestMapperUserRegister.UserRegisterRequest() {
-                UserName = userRegisterRequest.UserName,
+                Username = userRegisterRequest.UserName,
+                Password = userRegisterRequest.Password,
+                ConfirmPassword = userRegisterRequest.ConfirmPassword,
                 Email = userRegisterRequest.Email,
-                Password = userRegisterRequest.Password
             };
         }
     }

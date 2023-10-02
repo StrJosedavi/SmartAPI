@@ -1,6 +1,7 @@
 ﻿using SmartAPI.Infrastructure.Data;
 using SmartAPI.Infrastructure.Data.Entity;
 using SmartAPI.Infrastructure.Repository.Interface;
+using System.Net;
 
 namespace SmartAPI.Infrastructure.Repository {
     public class UserRepository : IUserRepository {
@@ -12,17 +13,55 @@ namespace SmartAPI.Infrastructure.Repository {
 
         }
 
-        public void Save(User user) 
+        public User Save(User user, UserCredential credential) 
         {
-            try
-            {
-                _dbContext.User.Add(user);
-                _dbContext.SaveChanges();
+            using (var transaction = _dbContext.Database.BeginTransaction()) {
+                try {
+
+                    _dbContext.User.Add(user);
+                    _dbContext.SaveChanges();
+
+                    SaveCredential(credential);
+
+                    user.UserCredential = credential;
+
+                    UpdateUser(user);
+
+                    transaction.Commit();
+
+                    return user;
+                }
+                catch (Exception ex) {
+                    transaction.Rollback();
+                    throw ex;
+                }
             }
-            catch (Exception ex) 
-            {
+        }
+
+        public User UpdateUser(User user) {
+            try {
+
+                _dbContext.User.Update(user);
+                _dbContext.SaveChanges();
+
+                return user;
+            }
+            catch (Exception ex) {
                 throw ex;
-            }    
+            }
+        }
+
+        public UserCredential SaveCredential(UserCredential credential) {
+            try {
+
+                _dbContext.UserCredential.Add(credential);
+                _dbContext.SaveChanges();
+
+                return credential;
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
         }
 
         public User? GetUserById(long Id) 

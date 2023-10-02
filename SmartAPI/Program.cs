@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
-//Adicionar schema de autentica��o da API
+//Adicionar schema de autenticacao da API
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -35,9 +35,9 @@ builder.Services.AddAuthentication(options =>
 
 //Contexto para acesso ao banco de dados
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("SqlServer")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//Inje��o de depend�ncias
+//Injecao de dependencias
 DependencyInjectionExtensions.ConfigureServiceDependencies(builder.Services);
 
 builder.Services.AddSwaggerGen(c =>
@@ -82,7 +82,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-//Middleware de Excess�es gen�ricas para tratamento de erros mais internos
+//Middleware de Excessoes genericas para tratamento de erros mais internos
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseAuthentication();

@@ -36,8 +36,8 @@ namespace SmartAPI.Application.Controllers {
         public IActionResult Register(UserRegisterRequest userRegisterRequest)
         {
             var RequestMapper = _userMapper.UserRequestRegisterMapper(userRegisterRequest);
-            _userService.Register(RequestMapper);
-            return Ok(new Response(){ Success = true, Data = null, Message = UserMessage.CREATE});
+            User user =  _userService.Register(RequestMapper);
+            return Ok(new Response(){ Success = true, Data = user, Message = UserMessage.CREATE});
         }
 
         /// <summary>
