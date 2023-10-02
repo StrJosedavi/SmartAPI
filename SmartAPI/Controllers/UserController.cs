@@ -6,7 +6,6 @@ using SmartAPI.Application.Models.Result;
 using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.Messages;
 using SmartAPI.Infrastructure.Data.Entity;
-using System.ComponentModel.DataAnnotations;
 
 namespace SmartAPI.Application.Controllers {
     [ApiController]
@@ -33,7 +32,7 @@ namespace SmartAPI.Application.Controllers {
         [ProducesResponseType(200, Type = typeof(Response))]    
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public IActionResult Register(UserRegisterRequest userRegisterRequest)
+        public IActionResult Register([FromBody]UserRegisterRequest userRegisterRequest)
         {
             var RequestMapper = _userMapper.UserRequestRegisterMapper(userRegisterRequest);
             User user =  _userService.Register(RequestMapper);
@@ -43,7 +42,7 @@ namespace SmartAPI.Application.Controllers {
         /// <summary>
         /// Busca de usuário
         /// </summary>
-        /// <param name="userId">Dados de usuário para busca.</param>
+        /// <param name="getUserByIdRequest">Dados de usuário para busca.</param>
         /// <returns>Sucesso na busca de usuário</returns>
 
         [HttpGet]
@@ -53,10 +52,10 @@ namespace SmartAPI.Application.Controllers {
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [Authorize]
-        public IActionResult GetUser([FromQuery][Required(ErrorMessage = "Necessário UserId")][Range(1, long.MaxValue)] long userId)
+        public IActionResult GetUser([FromQuery]GetUserByIdRequest getUserByIdRequest)
         {
-            User user = _userService.GetUser(userId);
-
+            var RequestMapper = _userMapper.GetUserRequestMapper(getUserByIdRequest);
+            User user = _userService.GetUser(RequestMapper);
             return Ok(new Response() { Success = true, Data = user, Message = UserMessage.FOUND });
         }
 

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SmartAPI.Application.Ioc;
+using SmartAPI.Application.Middleware;
 using SmartAPI.Infrastructure.Data;
 using System.Reflection;
 using System.Text;
@@ -82,6 +83,8 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+//Middleware de segurança
+app.UseMiddleware<AuthorizationMiddleware>();
 //Middleware de Excessoes genericas para tratamento de erros mais internos
 app.UseMiddleware<ErrorHandlerMiddleware>();
 

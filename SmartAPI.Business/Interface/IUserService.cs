@@ -5,6 +5,6 @@ namespace SmartAPI.Business.Interface {
     public interface IUserService
     {
         public User Register(UserRegisterRequest userRegisterRequest);
-        public User GetUser(long UserId);
+        public User GetUser(GetUserByIdRequest getUserByIdRequest);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace SmartAPI.Business.Services.Validations {
     public class UserValidation {
-        public static void ValidateRequest(UserRegisterRequest userRegisterRequest) 
+        public static void ValidateUserRegisterRequest(UserRegisterRequest userRegisterRequest) 
         {
 
             if (string.IsNullOrEmpty(userRegisterRequest.Username) || userRegisterRequest.Username.Length > 50)

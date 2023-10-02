@@ -24,7 +24,7 @@ namespace SmartAPI.Business.Services {
                 User newUser = new User();
                 UserCredential credential = new UserCredential();
 
-                UserValidation.ValidateRequest(userRegisterRequest);
+                UserValidation.ValidateUserRegisterRequest(userRegisterRequest);
 
                 string PassEncrypt = Encrypt.GenerateHash(userRegisterRequest.Password);
 
@@ -40,12 +40,12 @@ namespace SmartAPI.Business.Services {
             }
         }
 
-        public User GetUser(long userId) 
+        public User GetUser(GetUserByIdRequest getUserByIdRequest) 
         {
             try 
             {
 
-                User? user = _userRepository.GetUserById(userId);
+                User? user = _userRepository.GetUserById(getUserByIdRequest.UserId);
 
                 if (user == null) {
                     throw new HttpRequestException(UserMessage.NOTFOUND, null, HttpStatusCode.NotFound);

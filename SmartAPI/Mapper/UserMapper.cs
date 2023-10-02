@@ -13,5 +13,12 @@ namespace SmartAPI.Application.Mapper {
                 Email = userRegisterRequest.Email,
             };
         }
+
+        public RequestMapperUserRegister.GetUserByIdRequest GetUserRequestMapper(GetUserByIdRequest getUserByIdRequest) {
+
+            return new RequestMapperUserRegister.GetUserByIdRequest() {
+                UserId = getUserByIdRequest.UserId,
+            };
+        }
     }
 }
