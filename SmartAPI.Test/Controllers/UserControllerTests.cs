@@ -1,10 +1,3 @@
-using SmartAPI.Controllers;
-using SmartAPI.Data.Entity;
-using SmartAPI.Repository.Interface;
-using SmartAPI.Services;
-using SmartAPI.Services.Interface;
-using Xunit;
-
 namespace SmartAPI.Test.Controllers {
     public class UserControllerTests 
     {
