@@ -1,5 +1,5 @@
 # SmartAPI
-#### Projeto de uma API Pura para serviços, escrita em C# utilizando o framework ASP.NET Core e o banco de dados SQLServer.
+#### Projeto de uma API Pura para serviços, escrita em C# utilizando o framework ASP.NET Core e o banco de dados PostgreSQL.
 
 # Arquitetura Utilizada para esse projeto:
 
@@ -64,7 +64,7 @@
 
 ```json
 "ConnectionStrings": {    
-    "SqlServer": "Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;TrustServerCertificate=True;"        
+    "DefaultConnection": "Host=localhost;Port=5432;Database=SmartAPI;Username=Davi;Password=123"      
 },
 ```
  
