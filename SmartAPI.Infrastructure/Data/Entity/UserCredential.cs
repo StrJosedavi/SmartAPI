@@ -1,4 +1,4 @@
-﻿namespace SmartAPI.Data.Entity
+﻿namespace SmartAPI.Infrastructure.Data.Entity
 {
     public class UserCredential : BaseEntity
     {

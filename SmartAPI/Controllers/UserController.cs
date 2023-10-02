@@ -1,23 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SmartAPI.Data.Entity;
-using SmartAPI.Models.Request;
-using SmartAPI.Models.Result;
-using SmartAPI.Services.Interface;
-using SmartAPI.Services.Messages;
+using SmartAPI.Application.Mapper;
+using SmartAPI.Application.Models.Request;
+using SmartAPI.Application.Models.Result;
+using SmartAPI.Business.Interface;
+using SmartAPI.Business.Services.Messages;
+using SmartAPI.Infrastructure.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 
-namespace SmartAPI.Controllers {
+namespace SmartAPI.Application.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly UserMapper _userMapper;
+        public UserController(IUserService userService, UserMapper userMapper)
         {
            _userService = userService;
+           _userMapper = userMapper;
         }
-
 
         /// <summary>
         /// Criação de usuário
@@ -33,8 +35,8 @@ namespace SmartAPI.Controllers {
         [ProducesResponseType(500)]
         public IActionResult Register(UserRegisterRequest userRegisterRequest)
         {
-            _userService.Register(userRegisterRequest);
-
+            var RequestMapper = _userMapper.UserRequestRegisterMapper(userRegisterRequest);
+            _userService.Register(RequestMapper);
             return Ok(new Response(){ Success = true, Data = null, Message = UserMessage.CREATE});
         }
 

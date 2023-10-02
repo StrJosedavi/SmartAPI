@@ -1,10 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
-using SmartAPI.Data;
-using SmartAPI.Data.Entity;
-using SmartAPI.Repository.Interface;
+﻿using SmartAPI.Infrastructure.Data;
+using SmartAPI.Infrastructure.Data.Entity;
+using SmartAPI.Infrastructure.Repository.Interface;
 
-namespace SmartAPI.Repository
-{
+namespace SmartAPI.Infrastructure.Repository {
     public class UserRepository : IUserRepository {
 
         private readonly ApplicationDbContext _dbContext;
@@ -33,7 +31,7 @@ namespace SmartAPI.Repository
             {
                 return _dbContext.User.Find(Id);
             }
-            catch(SqlException ex)
+            catch(Exception ex)
             {
                 throw ex;
             }

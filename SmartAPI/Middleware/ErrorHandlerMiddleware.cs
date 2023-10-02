@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using System.Net;
 using System.Text.Json;
 
@@ -23,10 +22,10 @@ public class ErrorHandlerMiddleware {
         {
             await HandleExceptionAsync(context, ex);
         }
-        catch (SqlException ex)
+     /*   catch (Exception ex)
         {
             await HandleExceptionAsync(context, ex);
-        }
+        }*/
     }
 
     private static Task HandleExceptionAsync(HttpContext context, HttpRequestException exception) 
@@ -56,7 +55,7 @@ public class ErrorHandlerMiddleware {
         return context.Response.WriteAsync(json);
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, SqlException exception) 
+   /* private static Task HandleExceptionAsync(HttpContext context, SqlException exception) 
     {
 
         ObjectResult JsonResult;
@@ -67,5 +66,5 @@ public class ErrorHandlerMiddleware {
 
         var json = JsonSerializer.Serialize(JsonResult);
         return context.Response.WriteAsync(json);
-    }
+    }*/
 }

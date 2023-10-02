@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace SmartAPI.Middleware.ResultException {
+namespace SmartAPI.Application.Middleware.ResultException {
     public class HandleObjectResult : ActionResult, IStatusCodeActionResult {
         public HandleObjectResult() { }
 

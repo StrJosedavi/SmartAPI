@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SmartAPI.Services.Messages {
+namespace SmartAPI.Business.Services.Messages {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace SmartAPI.Services.Messages {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SmartAPI.Services.Messages.UserMessage", typeof(UserMessage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SmartAPI.Business.Services.Messages.UserMessage", typeof(UserMessage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

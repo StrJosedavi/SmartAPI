@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SmartAPI.Application.Models.Request
+namespace SmartAPI.Business.Services.DTO
 {
     public class UserRegisterRequest
     {

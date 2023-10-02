@@ -1,8 +1,11 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using SmartAPI.Business.Interface;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace SmartAPI.Auth.Service {
+namespace SmartAPI.Business.Services
+{
     public class AuthenticateService : IAuthenticateService {
 
         private readonly IConfiguration _configuration;

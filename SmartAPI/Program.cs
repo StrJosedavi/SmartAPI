@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SmartAPI.Data;
-using SmartAPI.Ioc;
+using SmartAPI.Application.Ioc;
+using SmartAPI.Infrastructure.Data;
 using System.Reflection;
 using System.Text;
 
@@ -35,7 +35,7 @@ builder.Services.AddAuthentication(options =>
 
 //Contexto para acesso ao banco de dados
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("SqlServer")));
 
 //Inje��o de depend�ncias
 DependencyInjectionExtensions.ConfigureServiceDependencies(builder.Services);

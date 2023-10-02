@@ -9,7 +9,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SmartAPI\SmartAPI.csproj" />
+		<ProjectReference Include="..\SmartAPI\SmartAPI.Application.csproj" />
 	</ItemGroup>
 	
   <ItemGroup>

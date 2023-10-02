@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SmartAPI.Data.Entity;
+using SmartAPI.Infrastructure.Data.Entity;
 
-namespace SmartAPI.Data
+namespace SmartAPI.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {

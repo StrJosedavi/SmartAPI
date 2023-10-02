@@ -1,7 +1,6 @@
-﻿using API.Domain.Entity.Enums;
+﻿using SmartAPI.Infrastructure.Data.Enum;
 
-namespace SmartAPI.Data.Entity
-{
+namespace SmartAPI.Infrastructure.Data.Entity {
     public class User : BaseEntity
     {
         public UserStatus Status { get; set; }

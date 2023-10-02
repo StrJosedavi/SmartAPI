@@ -1,5 +1,4 @@
-﻿namespace API.Domain.Entity.Enums
-{
+﻿namespace SmartAPI.Infrastructure.Data.Enum {
     public enum UserStatus
     {
         Active,

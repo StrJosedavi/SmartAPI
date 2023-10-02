@@ -1,4 +1,4 @@
-﻿namespace SmartAPI.Models.Result
+﻿namespace SmartAPI.Application.Models.Result
 {
     public class Response
     {

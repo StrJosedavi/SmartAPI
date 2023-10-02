@@ -1,12 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
-using SmartAPI.Data.Entity;
-using SmartAPI.Models.Request;
-using SmartAPI.Repository.Interface;
-using SmartAPI.Services.Interface;
-using SmartAPI.Services.Messages;
+﻿using SmartAPI.Business.Interface;
+using SmartAPI.Business.Services.DTO;
+using SmartAPI.Business.Services.Messages;
+using SmartAPI.Infrastructure.Data.Entity;
+using SmartAPI.Infrastructure.Repository.Interface;
 using System.Net;
 
-namespace SmartAPI.Services {
+namespace SmartAPI.Business.Services {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
@@ -38,7 +37,7 @@ namespace SmartAPI.Services {
             {
                 throw ex;
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 throw ex;
             }

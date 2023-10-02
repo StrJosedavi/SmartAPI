@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SmartAPI.Auth.Service;
+using SmartAPI.Business.Interface;
 
-namespace SmartAPI.Auth {
+namespace SmartAPI.Application.Controllers {
     [Route("[controller]")]
     [ApiController]
-    public class AuthenticateController : ControllerBase {
+    public class AuthenticateController : ControllerBase
+    {
 
         private readonly IAuthenticateService _authenticationService;
 
-        public AuthenticateController(IAuthenticateService authenticationService) {
+        public AuthenticateController(IAuthenticateService authenticationService)
+        {
             _authenticationService = authenticationService;
         }
 
@@ -20,12 +22,12 @@ namespace SmartAPI.Auth {
         [AllowAnonymous]
         [Route("[action]")]
         [HttpGet]
-        public IActionResult GenerateToken() 
+        public IActionResult GenerateToken()
         {
             var token = _authenticationService.GenerateJwtToken();
             return Ok(new { Token = token });
         }
 
-       
+
     }
 }

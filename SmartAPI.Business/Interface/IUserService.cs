@@ -1,8 +1,7 @@
-﻿using SmartAPI.Data.Entity;
-using SmartAPI.Models.Request;
+﻿using SmartAPI.Business.Services.DTO;
+using SmartAPI.Infrastructure.Data.Entity;
 
-namespace SmartAPI.Services.Interface
-{
+namespace SmartAPI.Business.Interface {
     public interface IUserService
     {
         public void Register(UserRegisterRequest userRegisterRequest);
