@@ -87,6 +87,7 @@ dotnet ef database update
 - [GitHub WorkFlow](https://docs.github.com/en/actions/using-workflows)
 - [Documentation Swagger](https://swagger.io/docs/)
 - [Documentation Xunit](https://xunit.net/#documentation)
+- [Documentation AutoMapper](https://docs.automapper.org/en/stable/)
 
 ## Contribuição
 #### Se você encontrar um bug ou quiser contribuir com o projeto, sinta-se à vontade para abrir uma issue.
