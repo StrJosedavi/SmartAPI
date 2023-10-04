@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SmartAPI.Application.Mapper;
 using SmartAPI.Application.Models.Request;
 using SmartAPI.Application.Models.Result;
 using SmartAPI.Business.Interface;
+using SmartAPI.Business.Services.DTO;
 using SmartAPI.Business.Services.Messages;
 using SmartAPI.Infrastructure.Data.Entity;
 
@@ -13,11 +14,11 @@ namespace SmartAPI.Application.Controllers {
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly UserMapper _userMapper;
-        public UserController(IUserService userService, UserMapper userMapper)
+        private readonly IMapper _mapper;
+        public UserController(IUserService userService, IMapper mapper)
         {
            _userService = userService;
-           _userMapper = userMapper;
+           _mapper = mapper;
         }
 
         /// <summary>
@@ -34,9 +35,9 @@ namespace SmartAPI.Application.Controllers {
         [ProducesResponseType(500)]
         public IActionResult Register([FromBody]UserRegisterRequest userRegisterRequest)
         {
-            var RequestMapper = _userMapper.UserRequestRegisterMapper(userRegisterRequest);
+            var RequestMapper = _mapper.Map<UserRegisterDTO>(userRegisterRequest);
             User user =  _userService.Register(RequestMapper);
-            return Ok(new Response(){ Success = true, Data = user, Message = UserMessage.CREATE});
+            return Ok(new { Success = true, User = user, Message = UserMessage.CREATE});
         }
 
         /// <summary>
@@ -54,9 +55,9 @@ namespace SmartAPI.Application.Controllers {
         [Authorize]
         public IActionResult GetUser([FromQuery]GetUserByIdRequest getUserByIdRequest)
         {
-            var RequestMapper = _userMapper.GetUserRequestMapper(getUserByIdRequest);
+            var RequestMapper = _mapper.Map<GetUserByIdDTO>(getUserByIdRequest);
             User user = _userService.GetUser(RequestMapper);
-            return Ok(new Response() { Success = true, Data = user, Message = UserMessage.FOUND });
+            return Ok(new { User = user, Message = UserMessage.FOUND });
         }
 
     }

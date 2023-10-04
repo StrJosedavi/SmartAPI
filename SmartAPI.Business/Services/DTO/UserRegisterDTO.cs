@@ -1,5 +1,5 @@
 ﻿namespace SmartAPI.Business.Services.DTO {
-    public class UserRegisterRequest
+    public class UserRegisterDTO
     {
         public string Username { get; set; }
         public string Password { get; set; }

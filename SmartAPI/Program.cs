@@ -15,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Adicionar schema de autenticacao da API
 builder.Services.AddAuthentication(options =>
 {
@@ -79,7 +80,6 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
-
 
 app.UseHttpsRedirection();
 

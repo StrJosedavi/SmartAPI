@@ -17,19 +17,19 @@ namespace SmartAPI.Business.Services {
             _userRepository = userRepository;
         }
 
-        public User Register(UserRegisterRequest userRegisterRequest)
+        public User Register(UserRegisterDTO userRegisterDTO)
         {
 
             try {
                 User newUser = new User();
                 UserCredential credential = new UserCredential();
 
-                UserValidation.ValidateUserRegisterRequest(userRegisterRequest);
+                UserValidation.ValidateUserRegisterDTO(userRegisterDTO);
 
-                string PassEncrypt = Encrypt.GenerateHash(userRegisterRequest.Password);
+                string PassEncrypt = Encrypt.GenerateHash(userRegisterDTO.Password);
 
                 newUser.Initialize(UserStatus.Active, Role.User);
-                credential.Initialize(userRegisterRequest.Username, PassEncrypt, newUser);
+                credential.Initialize(userRegisterDTO.Username, PassEncrypt, newUser);
 
                 newUser = _userRepository.Save(newUser, credential);
 
@@ -40,12 +40,12 @@ namespace SmartAPI.Business.Services {
             }
         }
 
-        public User GetUser(GetUserByIdRequest getUserByIdRequest) 
+        public User GetUser(GetUserByIdDTO getUserByIdDTO) 
         {
             try 
             {
 
-                User? user = _userRepository.GetUserById(getUserByIdRequest.UserId);
+                User? user = _userRepository.GetUserById(getUserByIdDTO.UserId);
 
                 if (user == null) {
                     throw new HttpRequestException(UserMessage.NOTFOUND, null, HttpStatusCode.NotFound);
