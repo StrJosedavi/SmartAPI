@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartAPI.Application.Middleware {
+﻿namespace SmartAPI.Application.Middleware {
     public class AuthorizationMiddleware {
 
         private readonly RequestDelegate _next;

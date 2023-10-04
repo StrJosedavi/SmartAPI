@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartAPI.Application.Models.Request;
-using SmartAPI.Application.Models.Result;
 using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.DTO;
 using SmartAPI.Business.Services.Messages;
@@ -30,7 +29,7 @@ namespace SmartAPI.Application.Controllers {
         [HttpPost]
         [Route("[action]")]
         [AllowAnonymous]
-        [ProducesResponseType(200, Type = typeof(Response))]    
+        [ProducesResponseType(200)]    
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public IActionResult Register([FromBody]UserRegisterRequest userRegisterRequest)
@@ -48,7 +47,7 @@ namespace SmartAPI.Application.Controllers {
 
         [HttpGet]
         [Route("[action]")]
-        [ProducesResponseType(200, Type = typeof(Response))]
+        [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
