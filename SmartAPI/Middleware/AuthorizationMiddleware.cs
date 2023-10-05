@@ -13,6 +13,9 @@
             }
             else {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                context.Response.ContentType = "application/json";
+                string json = "{\"Message\":\"Utilizador não autorizado\"}";
+                await context.Response.WriteAsync(json);
             }
         }
 
