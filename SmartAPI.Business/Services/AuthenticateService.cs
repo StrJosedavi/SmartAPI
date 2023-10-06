@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using SmartAPI.Business.Interface;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Text.Json;
 
 namespace SmartAPI.Business.Services
 {
@@ -14,7 +15,7 @@ namespace SmartAPI.Business.Services
             _configuration = configuration;
         }
 
-        public string GenerateJwtToken() {
+        public dynamic GenerateJwtToken() {
 
             var jwtSettings = _configuration.GetSection("JwtSettings");
 
@@ -29,7 +30,14 @@ namespace SmartAPI.Business.Services
                 signingCredentials: keyEncrypted
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            var result = new {
+                token = jwt,
+                expirationDate = expires.ToString()
+            };
+
+            return result;
         }
     }
 }

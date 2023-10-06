@@ -2,7 +2,6 @@
 {
     public interface IAuthenticateService
     {
-
-        public string GenerateJwtToken();
+        public dynamic GenerateJwtToken();
     }
 }

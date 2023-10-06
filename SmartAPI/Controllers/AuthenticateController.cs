@@ -25,7 +25,7 @@ namespace SmartAPI.Application.Controllers {
         public IActionResult GenerateToken()
         {
             var token = _authenticationService.GenerateJwtToken();
-            return Ok(new { Token = token });
+            return Ok(token);
         }
 
 
