@@ -45,7 +45,7 @@ namespace SmartAPI.Application.Controllers {
 
         [HttpGet]
         [Route("[action]")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(void), 400)]
         [ProducesResponseType(typeof(void), 500)]
