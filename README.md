@@ -1,12 +1,12 @@
-# SmartAPI
+# SmartAPI 👨‍💻
 #### Projeto de uma API Pura para serviços, escrita em C# utilizando o framework ASP.NET Core e o banco de dados PostgreSQL.
 
-# Arquitetura Utilizada para esse projeto:
+# Arquitetura Utilizada para esse projeto: 👷
 
 (Layered Architecture)
 ![image5-2](https://github.com/StrJosedavi/SmartAPI/assets/97465437/0cd1185d-fa74-4afc-8a5e-e13fc3c52e0c)
 
-## Utilização
+## Utilização 👨‍🏫
 
 - Clone este repositório em sua máquina local:
     
@@ -56,7 +56,7 @@
 
     [Swagger Index](https://localhost:7218/swagger/index.html)
 
-## Dependências
+## Dependências 🚀
 
 #### 1. Instale o .NET Core SDK e o SQLServer em sua máquina local.
 
@@ -74,7 +74,11 @@
 dotnet ef database update  
 ```
 
-## Referências
+## Collection para Testes Postman: 🧬📊
+
+[POSTMAN COLLECTION](https://web.postman.co/workspace/SmartAPI~3968ccf6-bdb5-42a7-826c-ebe731648148/overview)
+
+## Referências 📖
 
 - [common-web-application-architectures](https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures)
 - [.NET Download](https://dotnet.microsoft.com/pt-br/download/dotnet)
@@ -89,5 +93,5 @@ dotnet ef database update
 - [Documentation Xunit](https://xunit.net/#documentation)
 - [Documentation AutoMapper](https://docs.automapper.org/en/stable/)
 
-## Contribuição
+## Contribuição 👍
 #### Se você encontrar um bug ou quiser contribuir com o projeto, sinta-se à vontade para abrir uma issue.
