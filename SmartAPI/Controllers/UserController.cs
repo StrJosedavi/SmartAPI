@@ -10,14 +10,12 @@ using SmartAPI.Infrastructure.Data.Entity;
 namespace SmartAPI.Application.Controllers {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : Controller
-    {
+    public class UserController : Controller {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public UserController(IUserService userService, IMapper mapper)
-        {
-           _userService = userService;
-           _mapper = mapper;
+        public UserController(IUserService userService, IMapper mapper) {
+            _userService = userService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -29,9 +27,9 @@ namespace SmartAPI.Application.Controllers {
         [HttpPost]
         [Route("[action]")]
         [AllowAnonymous]
-        [ProducesResponseType(200)]    
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(User), 200)]
+        [ProducesResponseType(typeof(void), 400)]
+        [ProducesResponseType(typeof(void), 500)]
         public IActionResult Register([FromBody]UserRegisterRequest userRegisterRequest)
         {
             var RequestMapper = _mapper.Map<UserRegisterDTO>(userRegisterRequest);
@@ -48,9 +46,9 @@ namespace SmartAPI.Application.Controllers {
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(void), 400)]
+        [ProducesResponseType(typeof(void), 500)]
         [Authorize]
         public IActionResult GetUser([FromQuery]GetUserByIdRequest getUserByIdRequest)
         {
