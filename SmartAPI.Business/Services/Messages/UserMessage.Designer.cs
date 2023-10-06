@@ -104,5 +104,41 @@ namespace SmartAPI.Business.Services.Messages {
                 return ResourceManager.GetString("NOTFOUND", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username inválido.
+        /// </summary>
+        public static string VALIDATIONREQUEST01 {
+            get {
+                return ResourceManager.GetString("VALIDATIONREQUEST01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senhas não coincidem.
+        /// </summary>
+        public static string VALIDATIONREQUEST02 {
+            get {
+                return ResourceManager.GetString("VALIDATIONREQUEST02", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senha muito extensa ou não está no tamanho adequado de pelo menos 8 dígitos.
+        /// </summary>
+        public static string VALIDATIONREQUEST03 {
+            get {
+                return ResourceManager.GetString("VALIDATIONREQUEST03", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email não está no formato adequado.
+        /// </summary>
+        public static string VALIDATIONREQUEST04 {
+            get {
+                return ResourceManager.GetString("VALIDATIONREQUEST04", resourceCulture);
+            }
+        }
     }
 }

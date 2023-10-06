@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using SmartAPI.Application.Middleware.ResultException;
 using System.Net;
 using System.Text.Json;
 
@@ -31,20 +31,20 @@ public class ErrorHandlerMiddleware {
     private static Task HandleExceptionAsync(HttpContext context, HttpRequestException exception) 
     {
 
-        ObjectResult JsonResult;
+        HandleObjectResult JsonResult;
 
         switch (exception.StatusCode) 
         {
             case HttpStatusCode.NotFound:
-                JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status404NotFound };
+                JsonResult = new HandleObjectResult() { success = false, message = exception.Message, statusCode = StatusCodes.Status404NotFound };
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 break;
             case HttpStatusCode.BadRequest:
-                JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status400BadRequest };
+                JsonResult = new HandleObjectResult() { success = false, message = exception.Message, statusCode = StatusCodes.Status400BadRequest };
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 break;
             default:
-                JsonResult = new ObjectResult(new { Success = false, Message = exception.Message }) { StatusCode = StatusCodes.Status500InternalServerError };
+                JsonResult = new HandleObjectResult() { success = false, message = exception.Message, statusCode = StatusCodes.Status500InternalServerError };
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 break;
         }

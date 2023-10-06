@@ -8,6 +8,7 @@
         }
 
         public async Task InvokeAsync(HttpContext context) {
+
             if (ApplicationAuthorize(context)) {
                 await _next(context);
             }

@@ -35,7 +35,7 @@ namespace SmartAPI.Business.Services {
 
                 return newUser;
             }
-            catch (Exception ex) {
+            catch (HttpRequestException ex) {
                 throw ex;
             }
         }

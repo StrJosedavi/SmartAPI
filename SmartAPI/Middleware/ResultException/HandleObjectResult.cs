@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace SmartAPI.Application.Middleware.ResultException {
-    public class HandleObjectResult : ActionResult, IStatusCodeActionResult {
+    public class HandleObjectResult : ActionResult {
         public HandleObjectResult() { }
 
-        public bool? Success { get; set; }
-        public string? Message { get; set; }
-        public int? StatusCode { get; set; }
+        public bool? success { get; set; }
+        public string? message { get; set; }
+        public int? statusCode { get; set; }
     }
 }

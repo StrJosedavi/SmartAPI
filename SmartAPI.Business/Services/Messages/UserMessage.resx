@@ -132,4 +132,16 @@
   <data name="NOTFOUND" xml:space="preserve">
     <value>Usuário não encontrado</value>
   </data>
+  <data name="VALIDATIONREQUEST01" xml:space="preserve">
+    <value>Username inválido</value>
+  </data>
+  <data name="VALIDATIONREQUEST02" xml:space="preserve">
+    <value>Senhas não coincidem</value>
+  </data>
+  <data name="VALIDATIONREQUEST03" xml:space="preserve">
+    <value>Senha muito extensa ou não está no tamanho adequado de pelo menos 8 dígitos</value>
+  </data>
+  <data name="VALIDATIONREQUEST04" xml:space="preserve">
+    <value>Email não está no formato adequado</value>
+  </data>
 </root>
