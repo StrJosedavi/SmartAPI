@@ -1,7 +1,6 @@
 ﻿using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.DTO;
 using SmartAPI.Business.Services.Messages;
-using SmartAPI.Business.Services.Validations;
 using SmartAPI.Business.Util;
 using SmartAPI.Infrastructure.Data.Entity;
 using SmartAPI.Infrastructure.Data.Enum;
@@ -23,8 +22,6 @@ namespace SmartAPI.Business.Services {
             try {
                 User newUser = new User();
                 UserCredential credential = new UserCredential();
-
-                UserValidation.ValidateUserRegisterDTO(userRegisterDTO);
 
                 string PassEncrypt = Encrypt.GenerateHash(userRegisterDTO.Password);
 
