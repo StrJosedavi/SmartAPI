@@ -71,7 +71,13 @@
 #### 3. Execute o comando abaixo na pasta raiz do projeto para criar as tabelas no banco de dados:
 
 ```powershell
-dotnet ef database update  
+dotnet ef database update --project SmartAPI.Infrastructure
+```
+
+#### Extra: Caso queira reverter as migrations, basta utilizar o seguinte comando:
+
+```powershell
+dotnet ef database update 0 --project SmartAPI.Infrastructure
 ```
 
 ## Collection para Testes Postman: 🧬📊
