@@ -13,19 +13,13 @@ namespace SmartAPI.Infrastructure.Repository {
 
         }
 
-        public User Save(User user, UserCredential credential) 
+        public User Save(User user) 
         {
             using (var transaction = _dbContext.Database.BeginTransaction()) {
                 try {
 
                     _dbContext.User.Add(user);
                     _dbContext.SaveChanges();
-
-                    SaveCredential(credential);
-
-                    user.UserCredential = credential;
-
-                    UpdateUser(user);
 
                     transaction.Commit();
 

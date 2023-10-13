@@ -11,11 +11,11 @@ namespace SmartAPI.Infrastructure.Data.Entity {
         public UserStatus Status { get; set; }
         public Role Role { get; set; }
 
-        [ForeignKey("UserCredentialId")]
         [JsonIgnore]
         public UserCredential? UserCredential { get; set; }
 
-        public User Initialize(UserStatus status, Role role) {
+        public User Initialize(UserStatus status, Role role, string userName) {
+            UserName = userName;
             Status = status;
             Role = role;
             CreationDate = DateTime.Now.ToUniversalTime();

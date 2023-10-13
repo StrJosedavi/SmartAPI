@@ -25,10 +25,11 @@ namespace SmartAPI.Business.Services {
 
                 string PassEncrypt = Encrypt.GenerateHash(userRegisterDTO.Password);
 
-                newUser.Initialize(UserStatus.Active, Role.User);
+                newUser.Initialize(UserStatus.Active, Role.User, userRegisterDTO.Username);
                 credential.Initialize(userRegisterDTO.Username, PassEncrypt, newUser);
 
-                newUser = _userRepository.Save(newUser, credential);
+                newUser.UserCredential = credential;
+                newUser = _userRepository.Save(newUser);
 
                 return newUser;
             }
