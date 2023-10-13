@@ -80,6 +80,7 @@ dotnet ef database update --project SmartAPI.Infrastructure
 dotnet ef database update 0 --project SmartAPI.Infrastructure
 ```
 
+**Obs:. Atente-se de estar no caminho principal, para a execução da migration corretamente**
 ## Collection para Testes Postman: 🧬📊
 
 [POSTMAN COLLECTION](https://web.postman.co/workspace/SmartAPI~3968ccf6-bdb5-42a7-826c-ebe731648148/overview)
