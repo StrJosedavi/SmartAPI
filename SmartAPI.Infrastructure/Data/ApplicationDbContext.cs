@@ -8,7 +8,6 @@ namespace SmartAPI.Infrastructure.Data {
         public DbSet<User> User { get; set; }
         public DbSet<UserCredential> UserCredential { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
             var enumToStringUserStatus = new EnumToStringConverter<UserStatus>();

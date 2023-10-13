@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace SmartAPI.Migrations {
+namespace SmartAPI.Infrastructure.Migrations
+{
     /// <inheritdoc />
     public partial class Initial : Migration
     {
@@ -17,7 +19,7 @@ namespace SmartAPI.Migrations {
                     UserId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Status = table.Column<string>(type: "text", nullable: false),
-                    Role = table.Column<string>(type: "text", nullable: true),
+                    Role = table.Column<string>(type: "text", nullable: false),
                     UserCredentialId = table.Column<long>(type: "bigint", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)

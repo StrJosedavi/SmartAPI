@@ -7,6 +7,7 @@ namespace SmartAPI.Infrastructure.Data.Entity {
     public class User : BaseEntity {
         [Key]
         public long UserId { get; set; }
+        public string UserName { get; set; }
         public UserStatus Status { get; set; }
         public Role Role { get; set; }
 
