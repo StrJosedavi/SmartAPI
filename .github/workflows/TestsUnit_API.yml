@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: Test Application .NET
 
 on:
   push:
@@ -20,12 +20,43 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-      working-directory: ./SmartAPI
-    - name: Build
+
+    # Build the Application project
+    - name: Build Application
       run: dotnet build --no-restore
       working-directory: ./SmartAPI
-    - name: Test
+
+    # Test the Application project
+    - name: Test Application
       run: dotnet test --no-build --verbosity normal
       working-directory: ./SmartAPI
+
+    # Build the Business project
+    - name: Build Business
+      run: dotnet build --no-restore
+      working-directory: ./SmartAPI.Business
+
+    # Test the Business project
+    - name: Test Business
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ./SmartAPI.Business
+
+    # Build the Infrastructure project
+    - name: Build Infrastructure
+      run: dotnet build --no-restore
+      working-directory: ./SmartAPI.Infrastructure
+
+    # Test the Infrastructure project
+    - name: Test Infrastructure
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ./SmartAPI.Infrastructure
+
+    # Build the Test project
+    - name: Build Test
+      run: dotnet build --no-restore
+      working-directory: ./SmartAPI.Test
+
+    # Test the Test project
+    - name: Test Test
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ./SmartAPI.Test
