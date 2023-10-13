@@ -21,30 +21,34 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Build and Test SmartAPI
-      run: |
-        cd SmartAPI
-        dotnet build --no-restore
-        dotnet test --no-build --verbosity normal
+    # Defina o diretório de trabalho como o diretório raiz do projeto
+    - name: Set Working Directory
+      run: cd workflow
       working-directory: ./SmartAPI
 
+    # Build and test the SmartAPI project
+    - name: Build and Test SmartAPI
+      run: |
+        dotnet build --no-restore
+        dotnet test --no-build --verbosity normal
+
+    # Build and test the SmartAPI.Infrastructure project
     - name: Build and Test SmartAPI.Infrastructure
       run: |
-        cd SmartAPI.Infrastructure
+        cd ../SmartAPI.Infrastructure
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
-      working-directory: ./SmartAPI.Infrastructure
 
+    # Build and test the SmartAPI.Business project
     - name: Build and Test SmartAPI.Business
       run: |
-        cd SmartAPI.Business
+        cd ../SmartAPI.Business
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
-      working-directory: ./SmartAPI.Business
 
+    # Build and test the SmartAPI.Test project
     - name: Build and Test SmartAPI.Test
       run: |
-        cd SmartAPI.Test
+        cd ../SmartAPI.Test
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
-      working-directory: ./SmartAPI.Test
