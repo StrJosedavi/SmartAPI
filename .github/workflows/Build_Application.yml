@@ -39,4 +39,6 @@ jobs:
     - name: Build project (SmartAPI.Infrastructure)
       run: dotnet build SmartAPI.Infrastructure/SmartAPI.Infrastructure.csproj
 
+    - name: Testing Unit project
+      run: dotnet Test SmartAPI.Test/
 
