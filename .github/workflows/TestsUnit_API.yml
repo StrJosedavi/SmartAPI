@@ -23,7 +23,7 @@ jobs:
       run: cd SmartAPI
 
     - name: Build solution
-      run: dotnet build --no-restore
+      run: dotnet build SmartAPI.sln --no-restore
 
     - name: Test solution
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test SmartAPI.sln --no-build --verbosity normal
