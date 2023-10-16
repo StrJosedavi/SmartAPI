@@ -28,15 +28,15 @@ jobs:
       run: dotnet build SmartAPI/SmartAPI.Application.csproj
 
     - name: Restore project (SmartAPI.Business)
-      run: dotnet restore SmartAPI/SmartAPI.Business.csproj
+      run: dotnet restore SmartAPI.Business/SmartAPI.Business.csproj
 
     - name: Build project (SmartAPI.Business)
-      run: dotnet build SmartAPI/SmartAPI.Business.csproj
+      run: dotnet build SmartAPI.Business/SmartAPI.Business.csproj
 
     - name: Restore project (SmartAPI.Infrastructure)
-      run: dotnet restore SmartAPI/SmartAPI.Infrastructure.csproj
+      run: dotnet restore SmartAPI.Infrastructure/SmartAPI.Infrastructure.csproj
 
     - name: Build project (SmartAPI.Infrastructure)
-      run: dotnet build SmartAPI/SmartAPI.Infrastructure.csproj
+      run: dotnet build SmartAPI.Infrastructure/SmartAPI.Infrastructure.csproj
 
 
