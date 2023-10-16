@@ -1,7 +1,4 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
-name: Build and Test Application
+name: Build and Test
 
 on:
   push:
@@ -24,9 +21,8 @@ jobs:
 
     - name: Build solution
       run: dotnet build --no-restore
-      working-directory: ./SmartAPI
+      working-directory: ./SmartAPI.Application
 
     - name: Test solution
       run: dotnet test --no-build --verbosity normal
-      working-directory: ./SmartAPI
-
+      working-directory: ./SmartAPI.Application
