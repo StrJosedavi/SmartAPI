@@ -29,9 +29,4 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Validations\" />
-  </ItemGroup>
-
 </Project>
