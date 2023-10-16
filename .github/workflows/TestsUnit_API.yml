@@ -19,10 +19,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
+    - name: Change working directory
+      run: cd SmartAPI
+
     - name: Build solution
       run: dotnet build --no-restore
-      working-directory: ./SmartAPI.Application
 
     - name: Test solution
       run: dotnet test --no-build --verbosity normal
-      working-directory: ./SmartAPI.Application
