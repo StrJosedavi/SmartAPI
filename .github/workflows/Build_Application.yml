@@ -21,5 +21,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Build project
+    - name: Restore project (SmartAPI.Application)
+      run: dotnet restore SmartAPI/SmartAPI.Application.csproj
+
+    - name: Build project (SmartAPI.Application)
       run: dotnet build SmartAPI/SmartAPI.Application.csproj
