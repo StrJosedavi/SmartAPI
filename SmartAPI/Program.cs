@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SmartAPI.Application.Ioc;
 using SmartAPI.Application.Middleware;
 using SmartAPI.Infrastructure.Data;
+using SmartAPI.Infrastructure.Data.Entity;
 using System.Reflection;
 using System.Text;
 
@@ -13,31 +16,47 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-//Adicionar schema de autenticacao da API
-builder.Services.AddAuthentication(options =>
+
+//Claims de autorização
+builder.Services.AddAuthorization(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings["Issuer"],
-        ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
-    };
+    options.AddPolicy("User", policy => policy.RequireClaim("Role", "User"));
+    options.AddPolicy("Admin", policy => policy.RequireClaim("Role", "Admin"));
+    options.AddPolicy("Master", policy => policy.RequireClaim("Role", "Master"));
 });
 
 //Contexto para acesso ao banco de dados
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//Configurar identity para utilizar a classe user
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+//Adicionar schema de autenticacao da API
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+
+builder.Services.AddAuthentication(options => 
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+})
+    .AddJwtBearer(options => {
+    options.TokenValidationParameters = new TokenValidationParameters 
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
+    };
+});
+
+//Cors
+builder.Services.AddCors();
 
 //Injecao de dependencias
 DependencyInjectionExtensions.ConfigureServiceDependencies(builder.Services);
@@ -83,8 +102,6 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-//Middleware de segurança
-app.UseMiddleware<AuthorizationMiddleware>();
 //Middleware de Excessoes genericas para tratamento de erros mais internos
 app.UseMiddleware<ErrorHandlerMiddleware>();
 

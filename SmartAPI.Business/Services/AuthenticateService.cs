@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SmartAPI.Business.Interface;
+using SmartAPI.Infrastructure.Data.Entity;
+using SmartAPI.Infrastructure.Data.Enum;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 
@@ -15,23 +18,32 @@ namespace SmartAPI.Business.Services
             _configuration = configuration;
         }
 
-        public dynamic GenerateJwtToken() {
+        public dynamic GenerateJwtToken(User user) {
 
+            //Configurações do Token
             var jwtSettings = _configuration.GetSection("JwtSettings");
-
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
             var keyEncrypted = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddHours(Convert.ToDouble(jwtSettings["TokenExpiration"]));
 
-            var token = new JwtSecurityToken(
-                jwtSettings["Issuer"],
-                jwtSettings["Audience"],
-                expires: expires,
-                signingCredentials: keyEncrypted
-            );
+            //Criação do token
+            var tokenDescriptor = new SecurityTokenDescriptor {
 
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim("Role", user.Role.ToString())
+                }),
+
+                Expires = expires,
+                SigningCredentials = keyEncrypted
+            };
+
+            //Leitura do token
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
+            //Construção do retorno
             var result = new {
                 token = jwt,
                 expirationDate = expires.ToString()
