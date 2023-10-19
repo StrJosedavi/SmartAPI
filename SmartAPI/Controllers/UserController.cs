@@ -30,10 +30,10 @@ namespace SmartAPI.Application.Controllers {
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(typeof(void), 400)]
         [ProducesResponseType(typeof(void), 500)]
-        public IActionResult Register([FromBody]UserRegisterRequest userRegisterRequest)
+        public async Task<IActionResult> Register([FromBody]UserRegisterRequest userRegisterRequest)
         {
             var RequestMapper = _mapper.Map<UserRegisterDTO>(userRegisterRequest);
-            User user =  _userService.Register(RequestMapper);
+            User user = await _userService.Register(RequestMapper);
             return Ok(new { Success = true, User = user, Message = UserMessage.CREATE});
         }
 

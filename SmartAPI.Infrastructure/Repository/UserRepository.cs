@@ -7,19 +7,20 @@ namespace SmartAPI.Infrastructure.Repository {
     public class UserRepository : IUserRepository {
 
         private readonly ApplicationDbContext _dbContext;
-        public UserRepository(ApplicationDbContext dbContext) 
+        private readonly IdentityDbContext _IdentityContext;
+        public UserRepository(ApplicationDbContext dbContext, IdentityDbContext identityContext) 
         {
             _dbContext = dbContext;
-
+            _IdentityContext = identityContext;
         }
 
         public User Save(User user) 
         {
-            using (var transaction = _dbContext.Database.BeginTransaction()) {
+            using (var transaction = _IdentityContext.Database.BeginTransaction()) {
                 try {
 
-                    _dbContext.User.Add(user);
-                    _dbContext.SaveChanges();
+                    _IdentityContext.User.Add(user);
+                    _IdentityContext.SaveChanges();
 
                     transaction.Commit();
 
@@ -35,8 +36,8 @@ namespace SmartAPI.Infrastructure.Repository {
         public User UpdateUser(User user) {
             try {
 
-                _dbContext.User.Update(user);
-                _dbContext.SaveChanges();
+                _IdentityContext.User.Update(user);
+                _IdentityContext.SaveChanges();
 
                 return user;
             }
@@ -48,8 +49,8 @@ namespace SmartAPI.Infrastructure.Repository {
         public UserCredential SaveCredential(UserCredential credential) {
             try {
 
-                _dbContext.UserCredential.Add(credential);
-                _dbContext.SaveChanges();
+                _IdentityContext.UserCredential.Add(credential);
+                _IdentityContext.SaveChanges();
 
                 return credential;
             }
@@ -62,7 +63,7 @@ namespace SmartAPI.Infrastructure.Repository {
         {
             try 
             {
-                return _dbContext.User.Find(Id);
+                return _IdentityContext.User.Find(Id);
             }
             catch(Exception ex)
             {

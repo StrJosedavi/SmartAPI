@@ -26,18 +26,25 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Master", policy => policy.RequireClaim("Role", "Master"));
 });
 
-//Contexto para acesso ao banco de dados
+//Contextos padrão para acesso ao banco de dados
+var StringConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(StringConnection));
+
+// Contexto para uso do Identity separadamente
+builder.Services.AddDbContext<IdentityDbContext>(options =>
+    options.UseNpgsql(StringConnection));
 
 //Configurar identity para utilizar a classe user
 builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddEntityFrameworkStores<IdentityDbContext>()
     .AddDefaultTokenProviders();
 
 //Adicionar schema de autenticacao da API
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
+//scheme para authentication
 builder.Services.AddAuthentication(options => 
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -54,9 +61,6 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
     };
 });
-
-//Cors
-builder.Services.AddCors();
 
 //Injecao de dependencias
 DependencyInjectionExtensions.ConfigureServiceDependencies(builder.Services);

@@ -1,4 +1,5 @@
-﻿using SmartAPI.Business.Interface;
+﻿using Microsoft.AspNetCore.Identity;
+using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.DTO;
 using SmartAPI.Business.Services.Messages;
 using SmartAPI.Business.Util;
@@ -11,12 +12,14 @@ namespace SmartAPI.Business.Services {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly UserManager<User> _userManager;
+        public UserService(IUserRepository userRepository, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _userRepository = userRepository;
         }
 
-        public User Register(UserRegisterDTO userRegisterDTO)
+        public async Task<User> Register(UserRegisterDTO userRegisterDTO)
         {
 
             try {
@@ -25,13 +28,19 @@ namespace SmartAPI.Business.Services {
 
                 string PassEncrypt = Encrypt.GenerateHash(userRegisterDTO.Password);
 
-                newUser.Initialize(UserStatus.Active, Role.User, userRegisterDTO.Username);
-                credential.Initialize(userRegisterDTO.Username, PassEncrypt, newUser);
+                newUser.Initialize(userRegisterDTO.Username, userRegisterDTO.Email);
+                credential.Initialize(PassEncrypt, newUser);
 
                 newUser.UserCredential = credential;
-                newUser = _userRepository.Save(newUser);
+
+                var result = await _userManager.CreateAsync(newUser, PassEncrypt);
+
+                if (!result.Succeeded) {
+                    throw new HttpRequestException(UserMessage.ERROR_CREATE, null, HttpStatusCode.BadRequest);
+                }
 
                 return newUser;
+                
             }
             catch (HttpRequestException ex) {
                 throw ex;

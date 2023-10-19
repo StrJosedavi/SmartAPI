@@ -61,6 +61,33 @@ namespace SmartAPI.Business.Services.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credenciais inválidas.
+        /// </summary>
+        public static string AUTH01 {
+            get {
+                return ResourceManager.GetString("AUTH01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Falha na Autenticação.
+        /// </summary>
+        public static string AUTH02 {
+            get {
+                return ResourceManager.GetString("AUTH02", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuário Autenticado com sucesso.
+        /// </summary>
+        public static string AUTHSUCCESS {
+            get {
+                return ResourceManager.GetString("AUTHSUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usuário criado com sucesso.
         /// </summary>
         public static string CREATE {
@@ -75,6 +102,15 @@ namespace SmartAPI.Business.Services.Messages {
         public static string DELETE {
             get {
                 return ResourceManager.GetString("DELETE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro na criação do usuário.
+        /// </summary>
+        public static string ERROR_CREATE {
+            get {
+                return ResourceManager.GetString("ERROR_CREATE", resourceCulture);
             }
         }
         
