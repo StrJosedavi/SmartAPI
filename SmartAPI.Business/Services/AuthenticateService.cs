@@ -26,7 +26,7 @@ namespace SmartAPI.Business.Services
             _userManager = userManager;
         }
 
-        public dynamic GenerateJwtToken(User user) {
+        public async Task<dynamic> GenerateJwtToken(User user) {
 
             //Configurações do Token
             var jwtSettings = _configuration.GetSection("JwtSettings");
@@ -34,12 +34,14 @@ namespace SmartAPI.Business.Services
             var keyEncrypted = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddHours(Convert.ToDouble(jwtSettings["TokenExpiration"]));
 
+            var roles = await _userManager.GetRolesAsync(user);
+
             //Criação do token
             var tokenDescriptor = new SecurityTokenDescriptor {
 
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("Role", "User")
+                    new Claim(ClaimTypes.Role, roles.ToString())
                 }),
 
                 Expires = expires,
@@ -53,13 +55,14 @@ namespace SmartAPI.Business.Services
 
             //Construção do retorno
             var result = new {
-                token = jwt,
+                tokenCode = jwt,
                 expirationDate = expires.ToString()
             };
 
             return result;
         }
-        public async Task<dynamic> Login(UserLoginDTO UserLoginRequest) {
+        public async Task<dynamic> Login(UserLoginDTO UserLoginRequest) 
+        {
 
             try {
 
@@ -82,7 +85,6 @@ namespace SmartAPI.Business.Services
                     token
                 };
                 
-                    
                 return ResultLogin;
             }
             catch (HttpRequestException ex) {

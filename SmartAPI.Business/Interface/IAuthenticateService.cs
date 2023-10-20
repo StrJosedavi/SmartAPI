@@ -6,6 +6,6 @@ namespace SmartAPI.Business.Interface
     public interface IAuthenticateService
     {
         public Task<dynamic> Login(UserLoginDTO UserLoginRequest);
-        public dynamic GenerateJwtToken(User user);
+        public Task<dynamic> GenerateJwtToken(User user);
     }
 }

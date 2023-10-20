@@ -21,9 +21,9 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Claims de autorização
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("User", policy => policy.RequireClaim("Role", "User"));
-    options.AddPolicy("Admin", policy => policy.RequireClaim("Role", "Admin"));
-    options.AddPolicy("Master", policy => policy.RequireClaim("Role", "Master"));
+    options.AddPolicy("User", policy => policy.RequireRole("User"));
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("Master", policy => policy.RequireRole("Master"));
 });
 
 //Contextos padrão para acesso ao banco de dados

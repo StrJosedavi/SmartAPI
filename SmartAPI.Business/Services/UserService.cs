@@ -33,7 +33,13 @@ namespace SmartAPI.Business.Services {
 
                 newUser.UserCredential = credential;
 
-                var result = await _userManager.CreateAsync(newUser, PassEncrypt);
+                var result = await _userManager.CreateAsync(newUser, userRegisterDTO.Password);
+
+                if (!result.Succeeded) {
+                    throw new HttpRequestException(UserMessage.ERROR_CREATE, null, HttpStatusCode.BadRequest);
+                }
+
+                result = await _userManager.AddToRoleAsync(newUser, "User");
 
                 if (!result.Succeeded) {
                     throw new HttpRequestException(UserMessage.ERROR_CREATE, null, HttpStatusCode.BadRequest);
