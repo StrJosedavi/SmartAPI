@@ -22,19 +22,6 @@ namespace SmartAPI.Application.Controllers {
             _mapper = mapper;
         }
 
-        /*  /// <summary>
-          /// Geração de token de autenticação
-          /// </summary>
-          /// <returns>Token de autenticação</returns>
-          [AllowAnonymous]
-          [Route("[action]")]
-          [HttpGet]
-          public IActionResult GenerateToken(User user)
-          {
-              var token = _authenticationService.GenerateJwtToken(user);
-              return Ok(token);
-          }*/
-
         /// <summary>
         /// Autenticação de usuário
         /// </summary>
@@ -46,7 +33,7 @@ namespace SmartAPI.Application.Controllers {
             var RequestMapper = _mapper.Map<UserLoginDTO>(loginRequest);
             var LoginResult = await _authenticationService.Login(RequestMapper);
 
-            return Ok(new {Sucess = true, Session = LoginResult, Message =  UserMessage.AUTHSUCCESS});
+            return Ok(new {Success = true, Session = LoginResult, Message =  UserMessage.AUTHSUCCESS});
         }
     }
 }

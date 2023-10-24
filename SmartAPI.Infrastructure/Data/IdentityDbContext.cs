@@ -29,14 +29,8 @@ namespace SmartAPI.Infrastructure.Data {
             modelBuilder.Entity<IdentityRole>()
                 .ToTable("Roles");
 
-            modelBuilder.Entity<IdentityUserClaim<string>>()
-                .ToTable("UserClaims");
-
             modelBuilder.Entity<IdentityUserRole<string>>()
                 .ToTable("UserRoles");
-
-            modelBuilder.Entity<IdentityRoleClaim<string>>()
-                .ToTable("RoleClaims");
 
             modelBuilder.Entity<IdentityUserToken<string>>()
                 .ToTable("UserTokens");

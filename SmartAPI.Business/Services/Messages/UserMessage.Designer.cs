@@ -70,7 +70,7 @@ namespace SmartAPI.Business.Services.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Falha na Autenticação.
+        ///   Looks up a localized string similar to Usuário não cadastrado.
         /// </summary>
         public static string AUTH02 {
             get {

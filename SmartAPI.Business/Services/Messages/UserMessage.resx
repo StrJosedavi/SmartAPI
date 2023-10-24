@@ -121,7 +121,7 @@
     <value>Credenciais inválidas</value>
   </data>
   <data name="AUTH02" xml:space="preserve">
-    <value>Falha na Autenticação</value>
+    <value>Usuário não cadastrado</value>
   </data>
   <data name="AUTHSUCCESS" xml:space="preserve">
     <value>Usuário Autenticado com sucesso</value>

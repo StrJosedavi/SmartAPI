@@ -29,6 +29,7 @@ builder.Services.AddAuthorization(options =>
 //Contextos padrão para acesso ao banco de dados
 var StringConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
+//Contexto Padrão
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(StringConnection));
 
@@ -44,7 +45,6 @@ builder.Services.AddIdentity<User, IdentityRole>()
 //Adicionar schema de autenticacao da API
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
-//scheme para authentication
 builder.Services.AddAuthentication(options => 
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,14 +62,14 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-//Injecao de dependencias
+//Injecao de dependencias personalizadas
 DependencyInjectionExtensions.ConfigureServiceDependencies(builder.Services);
 
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Documentation SmartAPI", Version = "v1" });
 
-    // Arquivo XML de documenta��o
+    // Arquivo XML de documentacao
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);

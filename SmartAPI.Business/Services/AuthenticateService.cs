@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.DTO;
+using SmartAPI.Business.Services.DTO.Result;
 using SmartAPI.Business.Services.Messages;
 using SmartAPI.Infrastructure.Data.Entity;
 using SmartAPI.Infrastructure.Data.Enum;
@@ -26,8 +27,8 @@ namespace SmartAPI.Business.Services
             _userManager = userManager;
         }
 
-        public async Task<dynamic> GenerateJwtToken(User user) {
-
+        public async Task<TokenResult> GenerateJwtToken(User user) 
+        {
             //Configurações do Token
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
@@ -39,28 +40,30 @@ namespace SmartAPI.Business.Services
             //Criação do token
             var tokenDescriptor = new SecurityTokenDescriptor {
 
-                Subject = new ClaimsIdentity(new Claim[]
+                Subject = new ClaimsIdentity(new List<Claim>
                 {
-                    new Claim(ClaimTypes.Role, roles.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, user.Id), 
+                    new Claim(ClaimTypes.Name, user.UserName), 
                 }),
-
                 Expires = expires,
                 SigningCredentials = keyEncrypted
             };
+
+            foreach (var role in roles) {
+                tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
 
             //Leitura do token
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            //Construção do retorno
-            var result = new {
+            return new TokenResult {
                 tokenCode = jwt,
                 expirationDate = expires.ToString()
             };
-
-            return result;
         }
+
         public async Task<dynamic> Login(UserLoginDTO UserLoginRequest) 
         {
 
@@ -68,24 +71,20 @@ namespace SmartAPI.Business.Services
 
                 User user = await _userManager.FindByNameAsync(UserLoginRequest.UserName);
 
-                if (user == null || !await _userManager.CheckPasswordAsync(user, UserLoginRequest.Password)) {
-                    throw new HttpRequestException(UserMessage.AUTH01, null, HttpStatusCode.Unauthorized);
+                if (user == null) {
+                    throw new HttpRequestException(UserMessage.AUTH02, null, HttpStatusCode.BadRequest);
                 }
 
+                //Tenta realizar o login se sucesso gera o token de autorização
                 var signInResult = await _signInManager.PasswordSignInAsync(user, UserLoginRequest.Password, false, false);
 
                 if (!signInResult.Succeeded) {
-                    throw new HttpRequestException(UserMessage.AUTH02, null, HttpStatusCode.Unauthorized);
+                    throw new HttpRequestException(UserMessage.AUTH01, null, HttpStatusCode.Unauthorized);
                 }
 
-                var token = GenerateJwtToken(user);
+                TokenResult token = await GenerateJwtToken(user);
 
-                var ResultLogin = new {
-                    user,
-                    token
-                };
-                
-                return ResultLogin;
+                return new LoginResult { Token = token, User = user };
             }
             catch (HttpRequestException ex) {
                 throw ex;

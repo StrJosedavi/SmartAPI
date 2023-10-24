@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.DTO;
+using SmartAPI.Business.Services.DTO.Result;
 using SmartAPI.Business.Services.Messages;
 using SmartAPI.Business.Util;
 using SmartAPI.Infrastructure.Data.Entity;
@@ -25,28 +26,25 @@ namespace SmartAPI.Business.Services {
             try {
                 User newUser = new User();
                 UserCredential credential = new UserCredential();
-
-                string PassEncrypt = Encrypt.GenerateHash(userRegisterDTO.Password);
-
+            
                 newUser.Initialize(userRegisterDTO.Username, userRegisterDTO.Email);
+
+                string PassEncrypt = _userManager.PasswordHasher.HashPassword(newUser, userRegisterDTO.Password);
                 credential.Initialize(PassEncrypt, newUser);
 
                 newUser.UserCredential = credential;
 
-                var result = await _userManager.CreateAsync(newUser, userRegisterDTO.Password);
+                dynamic result = await _userRepository.Save(newUser, userRegisterDTO.Password);
 
-                if (!result.Succeeded) {
-                    throw new HttpRequestException(UserMessage.ERROR_CREATE, null, HttpStatusCode.BadRequest);
-                }
+                if (result.GetType() != typeof(User)) 
+                {
+                    IdentityResult ListErros = result;
+                    var error = ListErros.Errors.First();
 
-                result = await _userManager.AddToRoleAsync(newUser, "User");
-
-                if (!result.Succeeded) {
-                    throw new HttpRequestException(UserMessage.ERROR_CREATE, null, HttpStatusCode.BadRequest);
+                    throw new HttpRequestException(error.Description, null, HttpStatusCode.BadRequest);
                 }
 
                 return newUser;
-                
             }
             catch (HttpRequestException ex) {
                 throw ex;

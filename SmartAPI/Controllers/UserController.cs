@@ -26,10 +26,10 @@ namespace SmartAPI.Application.Controllers {
 
         [HttpPost]
         [Route("[action]")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(typeof(void), 400)]
         [ProducesResponseType(typeof(void), 500)]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody]UserRegisterRequest userRegisterRequest)
         {
             var RequestMapper = _mapper.Map<UserRegisterDTO>(userRegisterRequest);
@@ -54,7 +54,7 @@ namespace SmartAPI.Application.Controllers {
         {
             var RequestMapper = _mapper.Map<GetUserByIdDTO>(getUserByIdRequest);
             User user = _userService.GetUser(RequestMapper);
-            return Ok(new { User = user, Message = UserMessage.FOUND });
+            return Ok(new { Success = true, User = user, Message = UserMessage.FOUND });
         }
 
     }

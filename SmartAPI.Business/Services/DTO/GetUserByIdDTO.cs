@@ -1,5 +1,5 @@
 ﻿namespace SmartAPI.Business.Services.DTO {
     public class GetUserByIdDTO {
-        public long UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

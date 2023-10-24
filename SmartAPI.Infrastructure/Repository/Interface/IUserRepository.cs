@@ -3,9 +3,8 @@
 namespace SmartAPI.Infrastructure.Repository.Interface {
     public interface IUserRepository
     {
-        public User Save(User user);
-        public User? GetUserById(long Id);
-        public UserCredential SaveCredential(UserCredential credential);
+        public Task<dynamic> Save(User user, string password);
+        public User? GetUserById(string Id);
         public User UpdateUser(User user);
     }
 }
