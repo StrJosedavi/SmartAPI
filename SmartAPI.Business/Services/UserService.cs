@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.DTO;
-using SmartAPI.Business.Services.DTO.Result;
 using SmartAPI.Business.Services.Messages;
-using SmartAPI.Business.Util;
 using SmartAPI.Infrastructure.Data.Entity;
-using SmartAPI.Infrastructure.Data.Enum;
 using SmartAPI.Infrastructure.Repository.Interface;
 using System.Net;
 
