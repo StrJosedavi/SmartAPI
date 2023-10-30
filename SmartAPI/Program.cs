@@ -95,10 +95,6 @@ var app = builder.Build();
 //Middleware de Excessoes genericas para tratamento de erros mais internos
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
-app.Use(async (context, next) => {
-    await next.Invoke(); 
-});
-
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
