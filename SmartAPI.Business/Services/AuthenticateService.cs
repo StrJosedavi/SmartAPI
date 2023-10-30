@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.DTO;
 using SmartAPI.Business.Services.DTO.Result;
@@ -31,29 +32,29 @@ namespace SmartAPI.Business.Services
         {
             //Configurações do Token
             var jwtSettings = _configuration.GetSection("JwtSettings");
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
-            var keyEncrypted = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
+            var credentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddHours(Convert.ToDouble(jwtSettings["TokenExpiration"]));
 
+            //Buscar roles do usuário
             var roles = await _userManager.GetRolesAsync(user);
 
-            //Criação do token
-            var tokenDescriptor = new SecurityTokenDescriptor {
-
-                Subject = new ClaimsIdentity(new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id), 
-                    new Claim(ClaimTypes.Name, user.UserName), 
-                }),
-                Expires = expires,
-                SigningCredentials = keyEncrypted
+            //Definindo Claims
+            List<Claim> ClaimsList = new List<Claim> {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name, user.UserName)
             };
+            ClaimsList.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            var claimsIdentity = new ClaimsIdentity(ClaimsList);
 
-            foreach (var role in roles) {
-                tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, role));
-            }
-
-            //Leitura do token
+            //Criação do token (Payload)
+            var tokenDescriptor = new SecurityTokenDescriptor {
+                Subject = claimsIdentity,
+                Expires = expires,
+                SigningCredentials = credentials
+            };
+            
+            //Leitura do token  
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);

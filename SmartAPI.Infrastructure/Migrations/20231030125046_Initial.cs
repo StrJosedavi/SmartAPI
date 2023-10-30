@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace SmartAPI.Infrastructure.Migrations.IdentityDb
+namespace SmartAPI.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,7 +31,7 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -52,6 +52,48 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleClaim",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoleId = table.Column<string>(type: "text", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleClaim", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RoleClaim_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserClaim",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserClaim", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserClaim_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,7 +119,7 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserLogins",
+                name: "UserLogin",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(type: "text", nullable: false),
@@ -87,9 +129,9 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey("PK_UserLogin", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_UserLogins_User_UserId",
+                        name: "FK_UserLogin_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
@@ -121,7 +163,7 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserTokens",
+                name: "UserToken",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "text", nullable: false),
@@ -131,14 +173,19 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_UserToken", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_UserTokens_User_UserId",
+                        name: "FK_UserToken_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoleClaim_RoleId",
+                table: "RoleClaim",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -157,6 +204,10 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                 column: "NormalizedUserName",
                 unique: true);
 
+            migrationBuilder.CreateIndex(
+                name: "IX_UserClaim_UserId",
+                table: "UserClaim",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserCredential_UserId",
@@ -165,8 +216,8 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserLogins_UserId",
-                table: "UserLogins",
+                name: "IX_UserLogin_UserId",
+                table: "UserLogin",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -178,18 +229,23 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "RoleClaim");
+
+            migrationBuilder.DropTable(
+                name: "UserClaim");
 
             migrationBuilder.DropTable(
                 name: "UserCredential");
 
             migrationBuilder.DropTable(
-                name: "UserLogins");
+                name: "UserLogin");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
 
             migrationBuilder.DropTable(
-                name: "UserTokens");
+                name: "UserToken");
 
             migrationBuilder.DropTable(
                 name: "Roles");

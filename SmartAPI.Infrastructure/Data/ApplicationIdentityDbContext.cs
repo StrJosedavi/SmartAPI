@@ -1,25 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartAPI.Infrastructure.Data.Entity;
-using SmartAPI.Infrastructure.Data.Enum;
 
 namespace SmartAPI.Infrastructure.Data {
-    public class IdentityDbContext : IdentityDbContext<User> {
+    public class ApplicationIdentityDbContext : IdentityDbContext<User, IdentityRole, string> {
         public DbSet<User> User { get; set; }
         public DbSet<UserCredential> UserCredential { get; set; }
-        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options) { }
+        public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
             base.OnModelCreating(modelBuilder);
-
-            var enumToStringUserStatus = new EnumToStringConverter<UserStatus>();
-
-            modelBuilder
-                .Entity<User>()
-                .Property(e => e.Status)
-                .HasConversion(enumToStringUserStatus);
 
             modelBuilder.Entity<User>()
                 .ToTable("User")
@@ -32,11 +23,17 @@ namespace SmartAPI.Infrastructure.Data {
             modelBuilder.Entity<IdentityUserRole<string>>()
                 .ToTable("UserRoles");
 
-            modelBuilder.Entity<IdentityUserToken<string>>()
-                .ToTable("UserTokens");
+            modelBuilder.Entity<IdentityUserClaim<string>>()
+                .ToTable("UserClaim");
 
             modelBuilder.Entity<IdentityUserLogin<string>>()
-                .ToTable("UserLogins");
+                .ToTable("UserLogin");
+
+            modelBuilder.Entity<IdentityUserToken<string>>()
+                .ToTable("UserToken");
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>()
+                .ToTable("RoleClaim");
 
         }
     }

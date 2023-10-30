@@ -8,9 +8,9 @@ namespace SmartAPI.Infrastructure.Repository {
     public class UserRepository : IUserRepository {
 
         private readonly ApplicationDbContext _dbContext;
-        private readonly IdentityDbContext _IdentityContext;
+        private readonly ApplicationIdentityDbContext _IdentityContext;
         private readonly UserManager<User> _userManager;
-        public UserRepository(ApplicationDbContext dbContext, IdentityDbContext identityContext, UserManager<User> userManager) 
+        public UserRepository(ApplicationDbContext dbContext, ApplicationIdentityDbContext identityContext, UserManager<User> userManager) 
         {
             _userManager = userManager;
             _dbContext = dbContext;

@@ -27,9 +27,8 @@ namespace SmartAPI.Business.Services {
                 newUser.Initialize(userRegisterDTO.Username, userRegisterDTO.Email);
 
                 string PassEncrypt = _userManager.PasswordHasher.HashPassword(newUser, userRegisterDTO.Password);
-                credential.Initialize(PassEncrypt, newUser);
-
-                newUser.UserCredential = credential;
+                
+                newUser.UserCredential = credential.Initialize(PassEncrypt, newUser);
 
                 dynamic result = await _userRepository.Save(newUser, userRegisterDTO.Password);
 

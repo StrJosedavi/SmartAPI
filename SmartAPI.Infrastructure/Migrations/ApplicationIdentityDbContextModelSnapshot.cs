@@ -2,21 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartAPI.Infrastructure.Data;
 
 #nullable disable
 
-namespace SmartAPI.Infrastructure.Migrations.IdentityDb
+namespace SmartAPI.Infrastructure.Migrations
 {
-    [DbContext(typeof(IdentityDbContext))]
-    [Migration("20231018124407_initial")]
-    partial class initial
+    [DbContext(typeof(ApplicationIdentityDbContext))]
+    partial class ApplicationIdentityDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,7 +70,7 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleClaims", (string)null);
+                    b.ToTable("RoleClaim", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -98,7 +95,7 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaims", (string)null);
+                    b.ToTable("UserClaim", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -120,7 +117,7 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserLogins", (string)null);
+                    b.ToTable("UserLogin", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -154,7 +151,7 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", (string)null);
+                    b.ToTable("UserToken", (string)null);
                 });
 
             modelBuilder.Entity("SmartAPI.Infrastructure.Data.Entity.User", b =>
@@ -206,9 +203,8 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
@@ -250,13 +246,11 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("UserCredentialId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserCredential");
                 });
@@ -314,18 +308,14 @@ namespace SmartAPI.Infrastructure.Migrations.IdentityDb
 
             modelBuilder.Entity("SmartAPI.Infrastructure.Data.Entity.UserCredential", b =>
                 {
-                    b.HasOne("SmartAPI.Infrastructure.Data.Entity.User", "User")
-                        .WithOne("UserCredential")
-                        .HasForeignKey("SmartAPI.Infrastructure.Data.Entity.UserCredential", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                    b.HasOne("SmartAPI.Infrastructure.Data.Entity.User", null)
+                        .WithMany("UserCredentials")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("SmartAPI.Infrastructure.Data.Entity.User", b =>
                 {
-                    b.Navigation("UserCredential");
+                    b.Navigation("UserCredentials");
                 });
 #pragma warning restore 612, 618
         }
