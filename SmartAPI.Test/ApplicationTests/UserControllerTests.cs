@@ -1,3 +1,10 @@
+using AutoMapper;
+using SmartAPI.Application.Controllers;
+using SmartAPI.Application.Models.Request;
+using SmartAPI.Business.Interface;
+using SmartAPI.Business.Services.DTO;
+using SmartAPI.Infrastructure.Data.Entity;
+
 namespace SmartAPI.Test.Controllers {
     public class UserControllerTests 
     {
@@ -5,23 +12,27 @@ namespace SmartAPI.Test.Controllers {
         [Fact]
         public void GetUser_ValidUserId() 
         {
-           /* int userId = 1;
+          /* string userId = Guid.NewGuid().ToString();
 
             //Arrange
             var mockUserService = new Mock<IUserService>();
-            mockUserService.Setup(service => service.GetUser(userId))
-                          .Returns(new User { Id = userId, IsAdmin = false });
-            var controller = new UserController(mockUserService.Object);
+            var mockMapper = new Mock<IMapper>();
 
             // Act
-            var result = controller.GetUser(userId);
+            var controller = new UserController(mockUserService.Object, mockMapper.Object);
+            var request = new GetUserByIdRequest() { UserId = userId };
+
+            var DTO = mockMapper.Object.Map<GetUserByIdDTO>(request);
+
+            mockUserService.Setup(service => service.GetUser(DTO)).Returns(new User { Id = userId, Status = 0, UserName = "Teste"});
+
+            // Act
+            var result = controller.GetUser(request);
 
             // Assert
-            dynamic okResult = Assert.IsType<OkObjectResult>(result);
-            var user = Assert.IsType<User>(okResult.Value.Data);
+            dynamic okResult = Assert.IsType<UserController>(result);
+            var user = Assert.IsType<User>(okResult.Value.Data);*/
 
-            Assert.NotNull(user);
-            Assert.Equal(userId, user.Id);*/
         }
 
 

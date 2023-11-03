@@ -10,72 +10,49 @@ namespace SmartAPI.Infrastructure.Repository {
         private readonly ApplicationDbContext _dbContext;
         private readonly ApplicationIdentityDbContext _IdentityContext;
         private readonly UserManager<User> _userManager;
-        public UserRepository(ApplicationDbContext dbContext, ApplicationIdentityDbContext identityContext, UserManager<User> userManager) 
-        {
+        public UserRepository(ApplicationDbContext dbContext, ApplicationIdentityDbContext identityContext, UserManager<User> userManager) {
             _userManager = userManager;
             _dbContext = dbContext;
             _IdentityContext = identityContext;
         }
 
-        public async Task<dynamic> Save(User user, string password) 
-        {
-            using (var transaction = _IdentityContext.Database.BeginTransaction()) 
-            {
-                try {
-                    var result = await _userManager.CreateAsync(user, password);
+        public async Task<dynamic> Save(User user, string password) {
+            using (var transaction = _IdentityContext.Database.BeginTransaction()) {
+
+                var result = await _userManager.CreateAsync(user, password);
+
+                if (!result.Succeeded) {
+
+                    transaction.Rollback();
+                    return result;
+                }
+                else {
+
+                    result = await _userManager.AddToRoleAsync(user, "User");
 
                     if (!result.Succeeded) {
-                      
+
                         transaction.Rollback();
                         return result;
                     }
-                    else {
-                       
-                        result = await _userManager.AddToRoleAsync(user, "User");
-
-                        if (!result.Succeeded) {
-                            
-                            transaction.Rollback();
-                            return result;
-                        }
-                    }
-
-                    transaction.Commit();
-
-                    return user;
                 }
-                catch (Exception ex) {
 
-                    transaction.Rollback();
-                    throw ex;
-                }
+                transaction.Commit();
+
+                return user;
             }
         }
 
         public User UpdateUser(User user) {
 
-            try {
+            _IdentityContext.User.Update(user);
+            _IdentityContext.SaveChanges();
 
-                _IdentityContext.User.Update(user);
-                _IdentityContext.SaveChanges();
-
-                return user;
-            }
-            catch (Exception ex) {
-                throw ex;
-            }
+            return user;
         }
 
-        public User? GetUserById(string Id) 
-        {
-            try 
-            {
-                return _IdentityContext.User.Find(Id);
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+        public User? GetUserById(string Id) {
+            return _IdentityContext.User.Find(Id);
         }
     }
 }

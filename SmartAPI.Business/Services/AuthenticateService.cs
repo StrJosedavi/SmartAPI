@@ -87,8 +87,9 @@ namespace SmartAPI.Business.Services
 
                 return new LoginResult { Token = token, User = user };
             }
-            catch (HttpRequestException ex) {
-                throw ex;
+            catch 
+            {
+                throw;
             }
 
         }

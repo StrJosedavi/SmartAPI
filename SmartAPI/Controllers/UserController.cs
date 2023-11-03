@@ -6,6 +6,7 @@ using SmartAPI.Business.Interface;
 using SmartAPI.Business.Services.DTO;
 using SmartAPI.Business.Services.Messages;
 using SmartAPI.Infrastructure.Data.Entity;
+using System.Security.Claims;
 
 namespace SmartAPI.Application.Controllers {
     [ApiController]
@@ -49,7 +50,7 @@ namespace SmartAPI.Application.Controllers {
         [ProducesResponseType(typeof(void), 404)]
         [ProducesResponseType(typeof(void), 400)]
         [ProducesResponseType(typeof(void), 500)]
-        [Authorize(Roles = "Master")]
+        [Authorize(Policy = "Master")]
         public IActionResult GetUser([FromQuery]GetUserByIdRequest getUserByIdRequest)
         {
             var RequestMapper = _mapper.Map<GetUserByIdDTO>(getUserByIdRequest);
