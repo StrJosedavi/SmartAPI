@@ -7,51 +7,39 @@ using SmartAPI.Infrastructure.Repository.Interface;
 using System.Net;
 
 namespace SmartAPI.Business.Services {
-    public class UserService : IUserService
-    {
+    public class UserService : IUserService {
         private readonly IUserRepository _userRepository;
         private readonly UserManager<User> _userManager;
-        public UserService(IUserRepository userRepository, UserManager<User> userManager)
-        {
+        public UserService(IUserRepository userRepository, UserManager<User> userManager) {
             _userManager = userManager;
             _userRepository = userRepository;
         }
 
-        public async Task<User> Register(UserRegisterDTO userRegisterDTO)
-        {
-
+        public async Task<User> Register(UserRegisterDTO userRegisterDTO) {
             try {
-                User newUser = new User();
-                UserCredential credential = new UserCredential();
-            
+                User? newUser = new();
+                UserCredential credential = new();
+
                 newUser.Initialize(userRegisterDTO.Username, userRegisterDTO.Email);
 
                 string PassEncrypt = _userManager.PasswordHasher.HashPassword(newUser, userRegisterDTO.Password);
-                
+
                 newUser.UserCredential = credential.Initialize(PassEncrypt, newUser);
 
-                dynamic result = await _userRepository.Save(newUser, userRegisterDTO.Password);
+                newUser = await _userRepository.Save(newUser, userRegisterDTO.Password);
 
-                if (result.GetType() != typeof(User)) 
-                {
-                    IdentityResult ListErros = result;
-                    var error = ListErros.Errors.First();
-
-                    throw new HttpRequestException(error.Description, null, HttpStatusCode.BadRequest);
-                }
-
+                if (newUser == null) 
+                    throw new HttpRequestException(UserMessage.AUTH02, null, HttpStatusCode.BadRequest);
+                
                 return newUser;
             }
-            catch 
-            {
+            catch {
                 throw;
             }
         }
 
-        public User GetUser(GetUserByIdDTO getUserByIdDTO) 
-        {
-            try 
-            {
+        public User GetUser(GetUserByIdDTO getUserByIdDTO) {
+            try {
 
                 User? user = _userRepository.GetUserById(getUserByIdDTO.UserId);
 
@@ -61,8 +49,7 @@ namespace SmartAPI.Business.Services {
 
                 return user;
             }
-            catch 
-            {
+            catch {
                 throw;
             }
         }
