@@ -34,7 +34,7 @@ namespace SmartAPI.Application.Controllers {
         {
             var RequestMapper = _mapper.Map<UserRegisterDTO>(userRegisterRequest);
             User user =  _userService.Register(RequestMapper);
-            return Ok(new { Success = true, User = user, Message = UserMessage.CREATE});
+            return Ok(new {User = user, Message = UserMessage.CREATE});
         }
 
         /// <summary>
