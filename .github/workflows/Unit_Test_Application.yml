@@ -1,0 +1,44 @@
+name: Build SmartAPI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore project (SmartAPI.Application)
+      run: dotnet restore SmartAPI/SmartAPI.Application.csproj
+
+    - name: Build project (SmartAPI.Application)
+      run: dotnet build SmartAPI/SmartAPI.Application.csproj
+
+    - name: Restore project (SmartAPI.Business)
+      run: dotnet restore SmartAPI.Business/SmartAPI.Business.csproj
+
+    - name: Build project (SmartAPI.Business)
+      run: dotnet build SmartAPI.Business/SmartAPI.Business.csproj
+
+    - name: Restore project (SmartAPI.Infrastructure)
+      run: dotnet restore SmartAPI.Infrastructure/SmartAPI.Infrastructure.csproj
+
+    - name: Build project (SmartAPI.Infrastructure)
+      run: dotnet build SmartAPI.Infrastructure/SmartAPI.Infrastructure.csproj
+
+    - name: UnitTest_Application project
+      run: dotnet Test SmartAPI.Test/
+
