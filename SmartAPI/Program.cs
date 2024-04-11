@@ -15,7 +15,6 @@ builder.Services.AddEndpointsApiExplorer();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Adicionar schema de autenticacao da API
 builder.Services.AddAuthentication(options =>
 {
