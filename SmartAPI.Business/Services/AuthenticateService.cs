@@ -24,20 +24,13 @@ namespace SmartAPI.Business.Services
             var expires = DateTime.Now.AddHours(Convert.ToDouble(jwtSettings["TokenExpiration"]));
 
             var token = new JwtSecurityToken(
-                jwtSettings["Issuer"],
-                jwtSettings["Audience"],
                 expires: expires,
                 signingCredentials: keyEncrypted
             );
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            var result = new {
-                token = jwt,
-                expirationDate = expires.ToString()
-            };
-
-            return result;
+            return new { token = jwt, expirationDate = expires.ToString() };
         }
     }
 }
