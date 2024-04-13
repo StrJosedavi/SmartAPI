@@ -25,4 +25,4 @@ COPY --from=build /app/out ./
 EXPOSE 80
 
 # Defina o ponto de entrada do aplicativo
-ENTRYPOINT ["dotnet", "smartAPI.dll"]
+ENTRYPOINT ["dotnet", "SmartAPI.dll"]
