@@ -1,22 +1,26 @@
 # Use a imagem base do SDK do .NET Core para construir o aplicativo
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+
+# Defina o diretório de trabalho como /app
 WORKDIR /app
 
-# Copie o arquivo csproj e restaurar dependências
-COPY SmartAPI/*.csproj ./SmartAPI/
-COPY SmartAPI.Business/*.csproj ./SmartAPI.Business/
-COPY SmartAPI.Infrastructure/*.csproj ./SmartAPI.Infrastructure/
-RUN dotnet restore
+# Copie o código-fonte para o diretório de trabalho
+COPY . /app
 
-# Copie todo o código-fonte e construa o aplicativo
-COPY . .
+# Construa o aplicativo no modo de lançamento e gere o artefato final
 RUN dotnet publish -c Release -o out
 
 # Imagem de tempo de execução para a aplicação
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
+
+# Defina o diretório de trabalho como /app
 WORKDIR /app
+
+# Copie o artefato final da imagem de construção para a imagem de tempo de execução
 COPY --from=build /app/out ./
+
+# Exponha a porta 80 para o tráfego HTTP
 EXPOSE 80
-ENTRYPOINT ["dotnet", "SmartAPI.Application.dll"]
 
-
+# Defina o ponto de entrada do aplicativo
+ENTRYPOINT ["dotnet", "smartAPI.dll"]
