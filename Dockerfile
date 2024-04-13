@@ -22,7 +22,7 @@ WORKDIR /app
 COPY --from=build /app/out ./
 
 # Exponha a porta 80 para o tráfego HTTP
-EXPOSE 80
+EXPOSE 7218
 
 # Defina o ponto de entrada do aplicativo
 ENTRYPOINT ["dotnet", "SmartAPI.dll"]
