@@ -7,6 +7,8 @@ WORKDIR /app
 # Copie o código-fonte para o diretório de trabalho
 COPY . /app
 
+COPY ./*.csproj ./smartAPI 
+
 # Construa o aplicativo no modo de lançamento e gere o artefato final
 RUN dotnet publish -c Release -o out
 
