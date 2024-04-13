@@ -3,7 +3,9 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 
 # Copie o arquivo csproj e restaurar dependências
-COPY *.csproj ./
+COPY SmartAPI/*.csproj ./SmartAPI/
+COPY SmartAPI.Business/*.csproj ./SmartAPI.Business/
+COPY SmartAPI.Infrastructure/*.csproj ./SmartAPI.Infrastructure/
 RUN dotnet restore
 
 # Copie todo o código-fonte e construa o aplicativo
