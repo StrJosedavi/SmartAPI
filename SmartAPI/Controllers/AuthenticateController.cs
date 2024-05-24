@@ -21,7 +21,7 @@ namespace SmartAPI.Application.Controllers {
         /// <returns>Token de autenticação</returns>
         [AllowAnonymous]
         [Route("[action]")]
-        [HttpGet]
+        [HttpPost]
         public IActionResult GenerateToken()
         {
             var token = _authenticationService.GenerateJwtToken();

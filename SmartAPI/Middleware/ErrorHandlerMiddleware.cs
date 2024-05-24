@@ -1,4 +1,5 @@
 ﻿using SmartAPI.Application.Middleware.ResultException;
+using System;
 using System.Net;
 using System.Text.Json;
 
@@ -13,7 +14,6 @@ public class ErrorHandlerMiddleware {
 
     public async Task InvokeAsync(HttpContext context)
     {
-
         try 
         {
             await _next(context);
@@ -21,6 +21,10 @@ public class ErrorHandlerMiddleware {
         catch (HttpRequestException ex) 
         {
             await HandleExceptionAsync(context, ex);
+        }
+        catch 
+        {
+            await HandleExceptionAsync(context);
         }
     }
 
@@ -32,18 +36,29 @@ public class ErrorHandlerMiddleware {
         switch (exception.StatusCode) 
         {
             case HttpStatusCode.NotFound:
-                JsonResult = new HandleObjectResult() { success = false, message = exception.Message, statusCode = StatusCodes.Status404NotFound };
+                JsonResult = new HandleObjectResult() { message = exception.Message };
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 break;
             case HttpStatusCode.BadRequest:
-                JsonResult = new HandleObjectResult() { success = false, message = exception.Message, statusCode = StatusCodes.Status400BadRequest };
+                JsonResult = new HandleObjectResult() { message = exception.Message };
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 break;
             default:
-                JsonResult = new HandleObjectResult() { success = false, message = exception.Message, statusCode = StatusCodes.Status500InternalServerError };
+                JsonResult = new HandleObjectResult() { message = exception.Message };
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 break;
         }
+
+        context.Response.ContentType = "application/json";
+
+        var json = JsonSerializer.Serialize(JsonResult);
+        return context.Response.WriteAsync(json);
+    }
+
+    private static Task HandleExceptionAsync(HttpContext context)
+    {
+        HandleObjectResult JsonResult = new HandleObjectResult() { message = "Um erro interno ocorreu em nosso servidor e estamos trabalhando para corrigi-lo." };
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
         context.Response.ContentType = "application/json";
 

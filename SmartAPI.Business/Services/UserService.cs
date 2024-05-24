@@ -55,9 +55,9 @@ namespace SmartAPI.Business.Services {
             {
                 throw ex;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
         }
     }

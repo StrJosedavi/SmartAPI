@@ -83,8 +83,6 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-//Middleware de segurança
-app.UseMiddleware<AuthorizationMiddleware>();
 //Middleware de Excessoes genericas para tratamento de erros mais internos
 app.UseMiddleware<ErrorHandlerMiddleware>();
 

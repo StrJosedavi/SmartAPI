@@ -28,13 +28,12 @@ namespace SmartAPI.Application.Controllers {
         [Route("[action]")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(User), 200)]
-        [ProducesResponseType(typeof(void), 400)]
-        [ProducesResponseType(typeof(void), 500)]
-        public IActionResult Register([FromBody]UserRegisterRequest userRegisterRequest)
-        {
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public IActionResult Register([FromBody] UserRegisterRequest userRegisterRequest) {
             var RequestMapper = _mapper.Map<UserRegisterDTO>(userRegisterRequest);
-            User user =  _userService.Register(RequestMapper);
-            return Ok(new {User = user, Message = UserMessage.CREATE});
+            User user = _userService.Register(RequestMapper);
+            return Ok(new { User = user, Message = UserMessage.CREATE });
         }
 
         /// <summary>
@@ -46,9 +45,9 @@ namespace SmartAPI.Application.Controllers {
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(User), 200)]
-        [ProducesResponseType(typeof(void), 404)]
-        [ProducesResponseType(typeof(void), 400)]
-        [ProducesResponseType(typeof(void), 500)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         [Authorize]
         public IActionResult GetUser([FromQuery]GetUserByIdRequest getUserByIdRequest)
         {
