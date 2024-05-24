@@ -1,4 +1,5 @@
 ﻿using SmartAPI.Business.Interface;
+using SmartAPI.Business.Result;
 using SmartAPI.Business.Services.DTO;
 using SmartAPI.Business.Services.Messages;
 using SmartAPI.Business.Util;
@@ -16,22 +17,22 @@ namespace SmartAPI.Business.Services {
             _userRepository = userRepository;
         }
 
-        public User Register(UserRegisterDTO userRegisterDTO)
+        public UserRegisterResult Register(UserRegisterDTO userRegisterDTO)
         {
 
             try {
                 User newUser = new User();
                 UserCredential credential = new UserCredential();
 
-                string PassEncrypt = Encrypt.GenerateHash(userRegisterDTO.Password);
+                string PassEncrypt = Encrypt.GenerateHash(userRegisterDTO.Password!);
 
-                newUser.Initialize(UserStatus.Active, Role.User, userRegisterDTO.Username);
-                credential.Initialize(userRegisterDTO.Username, PassEncrypt, newUser);
+                newUser.Initialize(UserStatus.Active, Role.User, userRegisterDTO.Username!);
+                credential.Initialize(userRegisterDTO.Username!, PassEncrypt, newUser);
 
                 newUser.UserCredential = credential;
                 newUser = _userRepository.Save(newUser);
 
-                return newUser;
+                return new UserRegisterResult() { UserId = newUser.UserId, UserName = newUser.UserName, Status = Convert.ToInt32(newUser.Status)};
             }
             catch (HttpRequestException ex) {
                 throw ex;

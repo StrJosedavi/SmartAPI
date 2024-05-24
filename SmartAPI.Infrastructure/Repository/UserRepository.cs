@@ -10,25 +10,22 @@ namespace SmartAPI.Infrastructure.Repository {
         public UserRepository(ApplicationDbContext dbContext) 
         {
             _dbContext = dbContext;
-
         }
 
         public User Save(User user) 
         {
-            using (var transaction = _dbContext.Database.BeginTransaction()) {
-                try {
-
+            try {
+                using (_dbContext.Database.BeginTransaction()) {
                     _dbContext.User.Add(user);
                     _dbContext.SaveChanges();
 
-                    transaction.Commit();
-
-                    return user;
-                }
-                catch (Exception ex) {
-                    transaction.Rollback();
-                    throw ex;
-                }
+                    _dbContext.Database.CommitTransaction();
+                };
+                return user;
+            }
+            catch (Exception ex) {
+                _dbContext.Database.RollbackTransaction();
+                throw ex;
             }
         }
 

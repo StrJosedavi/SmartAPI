@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SmartAPI.Application.Models.Request;
+using SmartAPI.Application.Middleware.ResultException;
 using SmartAPI.Business.Interface;
+using SmartAPI.Business.Result;
 using SmartAPI.Business.Services.DTO;
 using SmartAPI.Business.Services.Messages;
 using SmartAPI.Infrastructure.Data.Entity;
+using SmartAPI.Models;
 
-namespace SmartAPI.Application.Controllers {
+namespace SmartAPI.Application.Controllers
+{
     [ApiController]
     [Route("[controller]")]
     public class UserController : Controller {
@@ -27,13 +30,16 @@ namespace SmartAPI.Application.Controllers {
         [HttpPost]
         [Route("[action]")]
         [AllowAnonymous]
-        [ProducesResponseType(typeof(User), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
-        public IActionResult Register([FromBody] UserRegisterRequest userRegisterRequest) {
-            var RequestMapper = _mapper.Map<UserRegisterDTO>(userRegisterRequest);
-            User user = _userService.Register(RequestMapper);
-            return Ok(new { User = user, Message = UserMessage.CREATE });
+        [ProducesResponseType(typeof(UserRegisterResult), 200)]
+        [ProducesResponseType(typeof(HandleObjectResult), 400)]
+        [ProducesResponseType(typeof(HandleObjectResult), 500)]
+        public IActionResult Register([FromBody] UserRegisterRequest userRegisterRequest) 
+        {
+            var requestMapper = _mapper.Map<UserRegisterDTO>(userRegisterRequest);
+
+            UserRegisterResult result = _userService.Register(requestMapper);
+
+            return Ok(new { User = result, Message = UserMessage.CREATE });
         }
 
         /// <summary>
@@ -45,14 +51,16 @@ namespace SmartAPI.Application.Controllers {
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(User), 200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(HandleObjectResult), 404)]
+        [ProducesResponseType(typeof(HandleObjectResult), 400)]
+        [ProducesResponseType(typeof(HandleObjectResult), 500)]
         [Authorize]
         public IActionResult GetUser([FromQuery]GetUserByIdRequest getUserByIdRequest)
         {
-            var RequestMapper = _mapper.Map<GetUserByIdDTO>(getUserByIdRequest);
-            User user = _userService.GetUser(RequestMapper);
+            var requestMapper = _mapper.Map<GetUserByIdDTO>(getUserByIdRequest);
+
+            User user = _userService.GetUser(requestMapper);
+
             return Ok(new { User = user, Message = UserMessage.FOUND });
         }
 

@@ -15,13 +15,16 @@ namespace SmartAPI.Business.Services
             _configuration = configuration;
         }
 
-        public dynamic GenerateJwtToken() {
+        public dynamic GenerateJwtToken() 
+        {
 
             var jwtSettings = _configuration.GetSection("JwtSettings");
+            var secretKey = jwtSettings["SecretKey"];
+            var timeExpirationToken = jwtSettings["TokenExpiration"];
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));
             var keyEncrypted = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddHours(Convert.ToDouble(jwtSettings["TokenExpiration"]));
+            var expires = DateTime.Now.AddHours(Convert.ToDouble(timeExpirationToken));
 
             var token = new JwtSecurityToken(
                 expires: expires,
