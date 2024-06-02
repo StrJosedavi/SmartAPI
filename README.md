@@ -1,11 +1,6 @@
 # SmartAPI 👨‍💻
 #### Projeto de uma API Pura para serviços, escrita em C# utilizando o framework ASP.NET Core e o banco de dados PostgreSQL.
 
-# Modelo Atual do Banco de dados: 📂
-
-![image](https://github.com/StrJosedavi/SmartAPI/assets/57737898/9521b097-9f15-443f-a981-eb20d2d34f10)
-
-
 ## Utilização 👨‍🏫
 
 - Clone este repositório em sua máquina local:
